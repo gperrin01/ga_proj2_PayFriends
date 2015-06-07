@@ -6,6 +6,7 @@ RSpec.describe Transaction, type: :model do
   let(:payer){User.new name: 'Gui'}
   let(:receiver){User.new name: 'Joe'}
   let(:transac){Transaction.new amount: '10', description: 'test case', payer: payer.id, receiver: receiver.id}
+  let(:transac2){Transaction.new amount: '20', description: 'test case', payer: payer.id, receiver: receiver.id}
 
   Context 'default and validation' do
     it 'must have an amount' do 
@@ -30,30 +31,12 @@ RSpec.describe Transaction, type: :model do
     end
   end
 
-  Context 'Normal behavior' do
-    # REFACTOR THIS !!
-    it 'adds up to the payer to_pay' do 
-      payer.transactions << transac
-      expect(payer.to_pay).to eq 10
-    end
-    it 'adds up to the receiver to_receive' do 
-      payer.transactions << transac
-      expect(receiver.to_receive).to eq 10
-    end
-    it 'can be settled' do 
+
+  Context 'usual behavior'  do 
+      it 'can be settled' do 
       payer.transactions << transac
       transac.settle_now
       expect(transac.settled).to eq 'true'
-    end
-    it 'when settled is deducted from payer to_pay' do 
-      payer.transactions << transac
-      transac.settle_now
-      expect(payer.to_pay).to eq 0
-    end
-    it 'when settled is deducted from receiver to_receive' do 
-      payer.transactions << transac
-      transac.settle_now
-      expect(receiver.to_receive).to eq 0
     end
   end
 
@@ -69,26 +52,6 @@ RSpec.describe Transaction, type: :model do
       payer.transactions << transac
       transac.settle_now
       expect(transac.delete).to eq raise_error
-    end
-    it 'editing amount impacts the payer to_pay' do 
-      payer.transactions << transac
-      transac.update(amount: 35)
-      expect(payer.to_pay).to eq 35
-    end
-    it 'editing amount impacts the receiver to_receive' do 
-      payer.transactions << transac
-      transac.update(amount: 35)
-      expect(receiver.to_receive).to eq 35
-    end
-    it 'deleting impacts the payer to_pay' do 
-      payer.transactions << transac
-      transac.destroy
-      expect(receiver.to_receive).to eq 0
-    end
-    it 'deleting impacts the receiver to_receive' do 
-      payer.transactions << transac
-      transac.destroy
-      expect(receiver.to_receive).to eq 0
     end
   end
 
