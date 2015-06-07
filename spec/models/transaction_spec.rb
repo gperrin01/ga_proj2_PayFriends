@@ -31,7 +31,6 @@ RSpec.describe Transaction, type: :model do
     end
   end
 
-
   Context 'usual behavior'  do 
       it 'can be settled' do 
       payer.transactions << transac
@@ -46,12 +45,12 @@ RSpec.describe Transaction, type: :model do
     it 'cannot be edited if already settled' do 
       payer.transactions << transac
       transac.settle_now
-      expect(transac.edit).to eq raise_error
+      expect(transac.edit_transaction).to raise_error
     end
     it 'cannot be deleted if already settled' do 
       payer.transactions << transac
       transac.settle_now
-      expect(transac.delete).to eq raise_error
+      expect(transac.destroy).to raise_error
     end
   end
 
