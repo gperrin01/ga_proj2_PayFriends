@@ -27,31 +27,30 @@ RSpec.describe User, type: :model do
   context 'updating balances after a deal' do
     # REFACTOR THIS !!
     it 'after a deal, user knows how much he owes another user' do 
-      binding.pry
       payer.deals << deal
       expect(payer.recap_balance(receiver)).to eq -10
     end
-    xit 'after a deal, payer knows the total amount to pay' do 
+    it 'after a deal, payer knows the total amount to pay' do 
       payer.deals << deal
       expect(payer.to_pay).to eq 10
     end
-    xit 'after a deal, receiver knows the total amount to receive' do 
+    it 'after a deal, receiver knows the total amount to receive' do 
       payer.deals << deal << deal2
       expect(receiver.to_receive).to eq 30
     end
 
     # see note on how to build model and only pass trhough settled_deals
-    xit 'after a deal is settled, it is removed from the balance between two users' do 
+    it 'after a deal is settled, it is removed from the balance between two users' do 
       payer.deals << deal << deal2
       deal.settle_now
       expect(payer.recap_balance(receiver)).to eq -20
     end
-    xit 'after a deal is settled, it is removed from the payer total amount to_pay' do 
+    it 'after a deal is settled, it is removed from the payer total amount to_pay' do 
       payer.deals << deal << deal2
       deal.settle_now
       expect(payer.to_pay).to eq 20
     end
-    xit 'after a deal is settled, it is removed from the receiver total amount to_receive' do 
+    it 'after a deal is settled, it is removed from the receiver total amount to_receive' do 
       payer.deals << deal << deal2
       deal.settle_now
       expect(receiver.to_receive).to eq 20
