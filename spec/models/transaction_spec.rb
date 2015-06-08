@@ -32,7 +32,7 @@ RSpec.describe Transaction, type: :model do
   end
 
   context 'usual behavior'  do 
-    xit 'can be settled' do 
+    it 'can be settled' do 
       payer.transactions << transac
       transac.settle_now
       expect(transac.settled).to eq true
@@ -42,16 +42,16 @@ RSpec.describe Transaction, type: :model do
   context 'editing transactions' do 
     # REFACTOR !!
     # actually make it a capybara one: no edit-delete button if you are settled!
-    xit 'cannot be edited if already settled' do 
-      payer.transactions << transac
-      transac.settle_now
-      expect{transac.edit_transaction}.to raise_error
-    end
-    xit 'cannot be deleted if already settled' do 
-      payer.transactions << transac
-      transac.settle_now
-      expect{transac.destroy}.to raise_error
-    end
+    # it 'cannot be edited if already settled' do 
+    #   payer.transactions << transac
+    #   transac.settle_now
+    #   expect{transac.edit_transaction}.to raise_error
+    # end
+    # it 'cannot be deleted if already settled' do 
+    #   payer.transactions << transac
+    #   transac.settle_now
+    #   expect{transac.delete_transaction}.to raise_error
+    # end
   end
 
 end

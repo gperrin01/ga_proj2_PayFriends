@@ -17,4 +17,10 @@ class Transaction < ActiveRecord::Base
     self.where(settled: :true)
   end
 
+  def settle_now
+    self.settled = 'true'
+  end
+
+
+
 end

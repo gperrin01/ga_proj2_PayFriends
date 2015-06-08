@@ -104,17 +104,17 @@ RSpec.describe User, type: :model do
 
     xit 'after deleting transaction, knows the new balance with the other user ' do 
       payer.transactions << transac << transac2
-      transac.destroy
+      transac.delete_transaction
       expect(payer.recap_balance(receiver)).to eq -20
     end
     xit 'after deleting transaction, payer knows new total amount to_pay' do 
       payer.transactions << transac << transac2
-      transac.destroy
+      transac.delete_transaction
       expect(receiver.to_receive).to eq 20
     end
     xit 'after deleting transaction, receiver knows new total amount to_receive' do 
       payer.transactions << transac << transac2
-      transac.destroy
+      transac.delete_transaction
       expect(receiver.to_receive).to eq 20
     end
   end
