@@ -5,23 +5,24 @@ RSpec.describe Transaction, type: :model do
   
   let(:payer){User.new name: 'Gui'}
   let(:receiver){User.new name: 'Joe'}
-  let(:transac){Transaction.new amount: '10', description: 'test case', payer: payer.id, receiver: receiver.id}
-  let(:transac2){Transaction.new amount: '20', description: 'test case', payer: payer.id, receiver: receiver.id}
+  let(:transac){Transaction.new amount: 10, description: 'test case', payer: payer.id, receiver: receiver.id}
+  let(:transac2){Transaction.new amount: 20, description: 'test case', payer: payer.id, receiver: receiver.id}
+  let(:transaction) { create(:transaction) }
 
-  Context 'default and validation' do
+  context 'default and validation' do
     it 'must have an amount' do 
-      transaction = Transaction.new
+      transaction = Transaction.new description: 'test case', payer: payer.id, receiver: receiver.id
       expect(transaction.valid?).to eq false
     end
-    it 'must have a description' do 
+    it 'must have a description' do amount: 10, payer: payer.id, receiver: receiver.id
       transaction = Transaction.new
       expect(transaction.valid?).to eq false
     end
     it 'must have a payer' do 
-      transaction = Transaction.new
+      transaction = Transaction.new amount: 10, description: 'test case', receiver: receiver.id
       expect(transaction.valid?).to eq false
     end
-    it 'must have a receiver' do 
+    it 'must have a receiver' do amount: 10, description: 'test case', payer: payer.id
       transaction = Transaction.new
       expect(transaction.valid?).to eq false
     end
@@ -31,7 +32,7 @@ RSpec.describe Transaction, type: :model do
     end
   end
 
-  Context 'usual behavior'  do 
+  context 'usual behavior'  do 
       it 'can be settled' do 
       payer.transactions << transac
       transac.settle_now
@@ -46,6 +47,7 @@ RSpec.describe Transaction, type: :model do
       payer.transactions << transac
       transac.settle_now
       expect(transac.edit_transaction).to raise_error
+      # expect{transac.edit_transaction}.to raise_error
     end
     it 'cannot be deleted if already settled' do 
       payer.transactions << transac
