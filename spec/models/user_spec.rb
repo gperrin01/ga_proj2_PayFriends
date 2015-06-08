@@ -1,5 +1,5 @@
 require 'rails_helper'
-require_relative 'transaction'
+
 
 RSpec.describe User, type: :model do
 
@@ -57,9 +57,9 @@ RSpec.describe User, type: :model do
     end
   end
 
-  Context 'updating balances after editing or deleting transactions' do 
+  context 'updating balances after editing or deleting transactions' do 
    # is all the below FEATURE testing??
-   xit 'after editing transaction amount, a user knows the new balance with the other user ' do 
+    xit 'after editing transaction amount, a user knows the new balance with the other user ' do 
       payer.transactions << transac << transac2
       transac.edit_transaction({amount: 35})
       expect(payer.recap_balance(receiver)).to eq -55
