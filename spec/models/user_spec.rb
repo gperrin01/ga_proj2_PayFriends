@@ -62,9 +62,11 @@ RSpec.describe User, type: :model do
   end
 
   context 'updating balances after editing or deleting deals' do 
-   # is all the below FEATURE testing??
+   # is all the below FEATURE testing?? WHENEVER the value changes, it has to be updated on screen
+   # maybe this was all suprrfluous, no need to test that values are updated correctly! I dont think I need an edit function since I will just get the params from the 'edit' route
     xit 'after editing deal amount, a user knows the new balance with the other user ' do 
       payer.deals << deal << deal2
+      receiver.deals_as_receiver << deal << deal2
       deal.edit_deal({amount: 35})
       expect(payer.recap_balance(receiver)).to eq -55
     end
