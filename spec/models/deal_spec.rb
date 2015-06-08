@@ -1,12 +1,12 @@
 require 'rails_helper'
 
 
-RSpec.describe deal, type: :model do
+RSpec.describe Deal, type: :model do
   
   let(:payer){User.new name: 'Gui'}
   let(:receiver){User.new name: 'Joe'}
-  let(:deal){deal.new amount: 10, description: 'test case', payer: payer.id, receiver: receiver.id}
-  let(:deal2){deal.new amount: 20, description: 'test case', payer: payer.id, receiver: receiver.id}
+  let(:deal){deal.new amount: 10, description: 'test case', payer: payer, receiver: receiver}
+  let(:deal2){deal.new amount: 20, description: 'test case', payer: payer, receiver: receiver}
 
   context 'default and validation' do
     it 'must have an amount' do 
@@ -33,9 +33,9 @@ RSpec.describe deal, type: :model do
 
   context 'usual behavior'  do 
     it 'can be settled' do 
-      payer.deals << transac
-      transac.settle_now
-      expect(transac.settled).to eq true
+      payer.deals << deal
+      deal.settle_now
+      expect(deal.settled).to eq true
     end
   end
 
@@ -43,14 +43,14 @@ RSpec.describe deal, type: :model do
     # REFACTOR !!
     # actually make it a capybara one: no edit-delete button if you are settled!
     # it 'cannot be edited if already settled' do 
-    #   payer.deals << transac
-    #   transac.settle_now
-    #   expect{transac.edit_deal}.to raise_error
+    #   payer.deals << deal
+    #   deal.settle_now
+    #   expect{deal.edit_deal}.to raise_error
     # end
     # it 'cannot be deleted if already settled' do 
-    #   payer.deals << transac
-    #   transac.settle_now
-    #   expect{transac.delete_deal}.to raise_error
+    #   payer.deals << deal
+    #   deal.settle_now
+    #   expect{deal.delete_deal}.to raise_error
     # end
   end
 

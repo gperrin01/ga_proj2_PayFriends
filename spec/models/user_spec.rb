@@ -5,8 +5,8 @@ RSpec.describe User, type: :model do
 
   let(:payer) {User.create name: 'Gui'}
   let(:receiver){User.create name: 'Joe'}
-  let(:deal){Deal.new amount: '10', description: 'test case', payer: payer.id, receiver: receiver.id}
-  let(:deal2){Deal.new amount: '20', description: 'test case', payer: payer.id, receiver: receiver.id}
+  let(:deal){Deal.create amount: '10', description: 'test case', payer: payer, receiver: receiver}
+  let(:deal2){Deal.create amount: '20', description: 'test case', payer: payer, receiver: receiver}
 
 
   context 'validation' do 
