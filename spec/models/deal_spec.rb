@@ -5,8 +5,8 @@ RSpec.describe Deal, type: :model do
   
   let(:payer){User.new name: 'Gui'}
   let(:receiver){User.new name: 'Joe'}
-  let(:deal){deal.new amount: 10, description: 'test case', payer: payer, receiver: receiver}
-  let(:deal2){deal.new amount: 20, description: 'test case', payer: payer, receiver: receiver}
+  let(:deal){Deal.new amount: 10, description: 'test case', payer: payer, receiver: receiver}
+  let(:deal2){Deal.new amount: 20, description: 'test case', payer: payer, receiver: receiver}
 
   context 'default and validation' do
     it 'must have an amount' do 
@@ -32,8 +32,8 @@ RSpec.describe Deal, type: :model do
   end
 
   context 'usual behavior'  do 
-    it 'can be settled' do 
-      payer.deals << deal
+    it 'can be settled' do
+      payer.deals_as_payer << deal << deal2
       deal.settle_now
       expect(deal.settled).to eq true
     end

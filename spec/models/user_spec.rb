@@ -5,8 +5,8 @@ RSpec.describe User, type: :model do
 
   let(:payer) {User.create name: 'Gui'}
   let(:receiver){User.create name: 'Joe'}
-  let(:deal){Deal.create amount: '10', description: 'test case', payer: payer, receiver: receiver}
-  let(:deal2){Deal.create amount: '20', description: 'test case', payer: payer, receiver: receiver}
+  let(:deal){Deal.create amount: 10, description: 'test case', payer: payer, receiver: receiver}
+  let(:deal2){Deal.create amount: 20, description: 'test case', payer: payer, receiver: receiver}
 
 
   context 'validation' do 
@@ -27,31 +27,35 @@ RSpec.describe User, type: :model do
   context 'updating balances after a deal' do
     # REFACTOR THIS !!
     it 'after a deal, user knows how much he owes another user' do 
-      payer.deals << deal
+      payer.deals_as_payer << deal
+      receiver.deals_as_receiver << deal
       expect(payer.recap_balance(receiver)).to eq -10
     end
     it 'after a deal, payer knows the total amount to pay' do 
-      payer.deals << deal
+      payer.deals_as_payer << deal
       expect(payer.to_pay).to eq 10
     end
     it 'after a deal, receiver knows the total amount to receive' do 
-      payer.deals << deal << deal2
+      receiver.deals_as_receiver << deal << deal2
       expect(receiver.to_receive).to eq 30
     end
 
     # see note on how to build model and only pass trhough settled_deals
     it 'after a deal is settled, it is removed from the balance between two users' do 
-      payer.deals << deal << deal2
+      payer.deals_as_payer << deal << deal2
+      receiver.deals_as_receiver << deal << deal2
       deal.settle_now
       expect(payer.recap_balance(receiver)).to eq -20
     end
     it 'after a deal is settled, it is removed from the payer total amount to_pay' do 
-      payer.deals << deal << deal2
+      payer.deals_as_payer << deal << deal2
+      receiver.deals_as_receiver << deal << deal2
       deal.settle_now
       expect(payer.to_pay).to eq 20
     end
     it 'after a deal is settled, it is removed from the receiver total amount to_receive' do 
-      payer.deals << deal << deal2
+      payer.deals_as_payer << deal << deal2
+      receiver.deals_as_receiver << deal << deal2
       deal.settle_now
       expect(receiver.to_receive).to eq 20
     end
