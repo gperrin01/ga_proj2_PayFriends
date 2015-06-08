@@ -7,8 +7,27 @@
   <%= csrf_meta_tags %>
 </head>
 <body>
+<div id="main_container">
 
-<%= yield %>
+  <header>
+    <h3>Welcome to Pay Friends</h3>
+  </header>
 
+  <div id="quick_adds">
+
+    <%= link_to 'Add friend', new_user_path %>
+
+    <%= form_for @user do |form| %>
+      <%= form.label :name %>
+      <%= form.text_field :name %>
+      <%= form.submit 'Create friend' %>
+    <% end %>
+
+  </div>
+
+    <%= yield %>
+
+
+</div>
 </body>
 </html>
