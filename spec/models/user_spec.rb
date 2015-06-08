@@ -10,15 +10,15 @@ RSpec.describe User, type: :model do
 
 
   context 'validation' do 
-    xit 'must have a name' do 
+    it 'must have a name' do 
       user = User.new
       expect(user.valid?).to eq false
     end
-    xit 'is created with 0 to pay' do 
+    it 'is created with 0 to pay' do 
       user = User.new
       expect(user.to_pay).to eq 0
     end
-    xit 'is created with 0 to receive' do 
+    it 'is created with 0 to receive' do 
       user = User.new
       expect(user.to_receive).to eq 0
     end

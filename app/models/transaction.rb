@@ -9,16 +9,20 @@ class Transaction < ActiveRecord::Base
   after_initialize :defaults
   def defaults
     self.description = 'no description yet'
-    self.settled = 'false'
+    self.settled = :false
   end
 
   # has_many :settled_transactions -> {where settled: true}, class_name: "Transaction"
   def self.settled_transactions
     self.where(settled: :true)
+    # or maybe :true or maybe 'true'
+  end
+  def self.unsettled_transactions
+    self.where(settled: :false)
   end
 
   def settle_now
-    self.settled = 'true'
+    self.update(settled: 'true')
   end
 
 
