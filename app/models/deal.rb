@@ -26,10 +26,10 @@ class Deal < ActiveRecord::Base
 
   def counterpart
     # return the user in the deal who is not Gui
-    self.payer.name == 'Gui' ? self.receiver.name : self.payer.name
+    self.payer.name == session[:logged_in].name ? self.receiver.name : self.payer.name
   end
   def verb_to_describe
-    self.payer.name == 'Gui' ? 'borrows' : 'lends'
+    self.payer.name == session[:logged_in].name ? 'borrows' : 'lends'
   end
   def time_create_readable
     self.created_at.strftime("%d/%/%Y")

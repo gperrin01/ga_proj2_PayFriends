@@ -44,7 +44,7 @@
 
   <ul class='indiv_deal_box'>
     <li class="indiv_deal_details"> <%= link_to "#{deal.long_description}", '#' %></li>
-    <% if deal.payer.name != 'Gui' %>
+    <% if deal.payer.name != session[:logged_in].name  %>
       <li class='indiv_deal_pay'><button class="pay_button" data-id=<%= deal.id %>>Pay</button></li>
     <% end %>
   </ul>
