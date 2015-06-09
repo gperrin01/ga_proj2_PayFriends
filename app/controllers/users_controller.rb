@@ -1,7 +1,13 @@
 class UsersController < ApplicationController
 
-  def new
-    @user = User.new
+  def create
+    @user = User.create name: params[:name]
+    if request.xhr?    
+      binding.pry
+      @user
+    else
+      redirect_to '/'
+    end
   end
 
 

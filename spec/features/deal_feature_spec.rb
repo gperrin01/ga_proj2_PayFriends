@@ -1,4 +1,4 @@
-requuire 'rails_helper'
+require 'rails_helper'
 
 describe 'on the homepage' do 
 

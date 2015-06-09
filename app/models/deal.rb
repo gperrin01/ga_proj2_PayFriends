@@ -24,7 +24,17 @@ class Deal < ActiveRecord::Base
     self.update(settled: 'true')
   end
 
+  def counterpart
+    # return the user in the deal who is not Gui
+    self.payer.name == 'Gui' ? self.receiver.name : self.payer.name
+  end
+  def verb_to_describe
+    self.payer.name == 'Gui' ? 'borrows' : 'lends'
+  end
+  def long_description
+    "#{self.counterpart} #{self.verb_to_describe} #{self.amount} - #{self.description}"
+  end
+
 
 
 end
-# 

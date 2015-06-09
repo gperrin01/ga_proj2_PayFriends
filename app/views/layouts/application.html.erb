@@ -10,22 +10,46 @@
 <div id="main_container">
 
   <header>
-    <h3>Welcome to Pay Friends</h3>
+    <h2>Pay Friends</h2>
+    <h4>Gui => To Pay <%= @gui.to_pay %> To Receive <%= @gui.to_receive %></h4>
   </header>
 
   <div id="quick_adds">
 
-    <%= link_to 'Add friend', new_user_path %>
+    <%= form_for @deal_new do |form| %>   
+      <%= form.label "Quick Deal" %>
+      <%= form.text_field :amount, placeholder: "Amount" %>
 
-    <%= form_for @user do |form| %>
-      <%= form.label :name %>
-      <%= form.text_field :name %>
-      <%= form.submit 'Create friend' %>
+      <%= form.select :payer, options_from_collection_for_select(@users, "id", "name"), prompt: 'Payer' %>
+      <%= form.select :receiver, options_from_collection_for_select(@users, "id", "name"), prompt: 'Receiver' %>
+
+      <%= form.text_field :description %>
+
+      <%= form.submit 'Submit' %>
+    <% end %>
+
+    <%= form_for @user_new do |form| %>
+      <%= form.text_field :name, placeholder: "Friend's name" %>
+      <%= form.submit 'New friend' %>
     <% end %>
 
   </div>
 
+  <div id="quick_menu">
+    <ul>
+      <li><a href="">Pending</a></li>
+      <li><a href="">Friends</a></li>
+      <li><a href="">To Pay</a></li>
+      <li><a href="">To Receive</a></li>
+      <li><a href="">History</a></li>
+    </ul>
+  </div>
+
+  <div id="view_zone">
     <%= yield %>
+  </div>
+
+
 
 
 </div>

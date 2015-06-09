@@ -1,13 +1,9 @@
 class DealsController < ApplicationController
 
   def index
-    @deals = Deal.all
+    @pending = @deals.unsettled_deals.sort_by(&:updated_at)
+
+
   end
-
-  def new
-    @deal = Deal.new
-  end
-
-
 
 end

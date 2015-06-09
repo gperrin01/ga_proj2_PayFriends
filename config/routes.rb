@@ -7,7 +7,7 @@ Rails.application.routes.draw do
    get '/deals', to: 'deals#index'
 
    get '/users/new', to: 'users#new', as: 'new_user'
-   post 'users', to: 'users#create'
+   post '/users', to: 'users#create'
 
 
   # Example of named route that can be invoked with purchase_url(id: product.id)

@@ -14,15 +14,15 @@ class User < ActiveRecord::Base
   end
 
   def to_pay
-    self.deals_as_payer.unsettled_deals.map {|deal| deal.amount}.inject(&:+) || 0
+    self.deals_as_payer.unsettled_deals.map(&:amount).inject(&:+) || 0
   end
   def to_receive
-    self.deals_as_receiver.unsettled_deals.map {|deal| deal.amount}.inject(&:+) || 0
+    self.deals_as_receiver.unsettled_deals.map(&:amount).inject(&:+) || 0
   end
 
   def recap_balance(other_user)
-    pay = self.deals_as_payer.unsettled_deals.where(receiver: other_user).map {|deal| deal.amount}.inject(&:+) || 0
-    receive = self.deals_as_receiver.unsettled_deals.where(payer: other_user).map {|deal| deal.amount}.inject(&:+) || 0
+    pay = self.deals_as_payer.unsettled_deals.where(receiver: other_user).map(&:amount).inject(&:+) || 0
+    receive = self.deals_as_receiver.unsettled_deals.where(payer: other_user).map(&:amount).inject(&:+) || 0
     receive - pay
     # negative number means self owes ££ to other user (because means he is more payer than receiver)
   end 
