@@ -5,11 +5,10 @@ class UsersController < ApplicationController
   end
 
   def login
-    binding.pry
     temp = User.where(name: params[:name]).first_or_create
     session[:logged_id] = temp.id
     
-    binding.pry
+
 
     # at this point current_user totally looks saved on the database (see pry), but whwn redirected to deals_path, i've lost @curruser
 

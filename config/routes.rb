@@ -4,7 +4,8 @@ Rails.application.routes.draw do
 # start by assuming user is Gui
    root 'users#welcome'
 
-   get '/users/login', to: 'users#login'
+   post '/users/login', to: 'users#login'
+   # get '/users/login', to: 'deals#index'
    
    resources :deals
 

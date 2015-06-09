@@ -1,15 +1,17 @@
 <h4>Log in to your account or immediately create a new one</h4>
 
-<ul>
-<% @users.each do |user| %>
-  <%= link_to user.name, '/users/login' %>
-<% end %>
-</ul>
+<form action='/deals' method="get" id="login">
+  <%= select_tag :id, options_from_collection_for_select(@users, "id", "name") %>
+  <input type="submit" value='Log in'>
+</form>
 
-
-<form action='/users/welcome' method="post" id="login">
+<p>Adding new user is currently not coded</p>
+<form action='/users/login' method="post" id="login">
   <%= text_field_tag :name, "Create new user" %>
   <input type="submit" value='Log in'>
 </form>
+
+
+
 
 
