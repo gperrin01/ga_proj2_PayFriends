@@ -1,7 +1,7 @@
 <h4>Log in to your account or immediately create a new one</h4>
 
 <form action='/deals' method="get" id="login">
-  <%= select_tag :id, options_from_collection_for_select(@users, "id", "name") %>
+  <%= select_tag :logged_id, options_from_collection_for_select(@users, "id", "name") %>
   <input type="submit" value='Log in'>
 </form>
 
