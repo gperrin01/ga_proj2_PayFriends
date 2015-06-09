@@ -2,12 +2,15 @@ Rails.application.routes.draw do
   # The priority is based upon order of creation: first created -> highest priority.
  
 # start by assuming user is Gui
-   root 'deals#index'
+   root 'users#welcome'
 
-   get '/deals', to: 'deals#index'
+   get '/users/login', to: 'users#login'
+   
+   resources :deals
 
-   get '/users/new', to: 'users#new', as: 'new_user'
-   post '/users', to: 'users#create'
+   resources :users
+
+
 
 
   # Example of named route that can be invoked with purchase_url(id: product.id)

@@ -1,0 +1,15 @@
+<h4>Log in to your account or immediately create a new one</h4>
+
+<ul>
+<% @users.each do |user| %>
+  <%= link_to user.name, '/users/login' %>
+<% end %>
+</ul>
+
+
+<form action='/users/welcome' method="post" id="login">
+  <%= text_field_tag :name, "Create new user" %>
+  <input type="submit" value='Log in'>
+</form>
+
+

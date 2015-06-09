@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  validates :name, presence: true, length: {minimum: 2}
+  validates :name, presence: true, length: {minimum: 2}, uniqueness: true
   
   has_many :deals_as_payer, class_name: "Deal", foreign_key: "payer_id"
   has_many :deals_as_receiver, class_name: "Deal", foreign_key: "receiver_id"

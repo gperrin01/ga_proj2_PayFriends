@@ -31,6 +31,9 @@ class Deal < ActiveRecord::Base
   def verb_to_describe
     self.payer.name == 'Gui' ? 'borrows' : 'lends'
   end
+  def time_create_readable
+    self.created_at.strftime("%d/%/%Y")
+  end
   def long_description
     "#{self.counterpart} #{self.verb_to_describe} #{self.amount} - #{self.description}"
   end
