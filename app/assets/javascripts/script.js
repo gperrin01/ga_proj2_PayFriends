@@ -86,6 +86,7 @@ function settleDeal() {
     dataType: 'json',
     data: {id: id}  
   }).done(function(data){
+    debugger;
     console.log('succes settle it');
     appendToHistory(data);
     

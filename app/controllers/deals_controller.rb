@@ -37,6 +37,7 @@ class DealsController < ApplicationController
     @deal = Deal.find params[:id]
     @deal.settle_now
     @time = @deal.time_create_readable
+
     @full_deal = {deal: @deal, time: @time, long_description: @deal.long_description(current_user)}
 
     respond_to do |format|

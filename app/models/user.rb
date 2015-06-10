@@ -15,9 +15,6 @@ class User < ActiveRecord::Base
   # SELECT "deals".* FROM "deals" WHERE "deals"."receiver_id" = $1  [["receiver_id", 1]]
 
   def all_deals
-    # Deal.where => SELECT "deals".* FROM "deals" WHERE
-    # deals.receiver_id = :id OR deals.payer_id = :id", id: id
-    # @deals = Deal.where("deals.receiver_id = :id OR deals.payer_id = :id", id: id)
     self.deals_as_payer + self.deals_as_receiver
   end
 

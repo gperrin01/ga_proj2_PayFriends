@@ -20,7 +20,8 @@ class Deal < ActiveRecord::Base
     self.where(settled: 'false')
   end
   def settle_now
-    self.update(settled: 'true')
+    self.settled = 'true'
+    self.save
   end
 
   def counterpart(current_user)

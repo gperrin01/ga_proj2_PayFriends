@@ -45,23 +45,21 @@
   </div>
 
   <div id="pending_deals" class="sub_zone">
-
     <h4>Pending Deals</h4>
 
     <% @pending.each do |deal| %>
-
     <ul class='indiv_deal_box'>
       <li class="indiv_deal_details"> <span><%= "#{deal.time_create_readable}" %> - </span> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
+      
       <% if deal.payer.name != current_user.name  %>
         <li class='indiv_deal_pay'><button class="pay_button" data-id=<%= deal.id %>>Pay</button></li>
       <% end %>
     </ul>
-
     <% end %>
+
   </div>
 
   <div id="history" class="sub_zone">
-
     <h4>History of Deals</h4>
 
     <% @history.each do |deal| %>
@@ -70,7 +68,6 @@
     </ul>
     <% end %>
 
-
   </div>
 
-</div>
+</div> 
