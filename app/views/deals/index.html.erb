@@ -1,7 +1,13 @@
 <header>
   <h2>Pay Friends</h2>
 
-  <h4><%= current_user.name %> => To Pay <%= current_user.to_pay %> To Receive <%= current_user.to_receive %></h4>
+  <div id="recaps">
+    <div><p><%= current_user.name %> - </p></div>
+    <div><p>To Pay</div>
+    <div><p><%= current_user.to_pay %></p></div>
+    <div><p>To Receive</p></div>
+    <div><p><%= current_user.to_receive %></p></div>
+  </div>
 </header>
 
 <div id="quick_adds">
@@ -26,17 +32,17 @@
 
 </div>
 
-<div id="quick_menu">
-  <ul>
-    <li><a href="">Pending</a></li>
-    <li><a href="">Friends</a></li>
-    <li><a href="">To Pay</a></li>
-    <li><a href="">To Receive</a></li>
-    <!-- <li><a href="">History</a></li> -->
-  </ul>
-</div>
-
 <div id="view_zone">
+
+  <div id="quick_menu">
+    <ul>
+      <li><a href="">Pending</a></li>
+      <li><a href="">Friends</a></li>
+      <li><a href="">To Pay</a></li>
+      <li><a href="">To Receive</a></li>
+      <!-- <li><a href="">History</a></li> -->
+    </ul>
+  </div>
 
   <div id="pending_deals" class="sub_zone">
 

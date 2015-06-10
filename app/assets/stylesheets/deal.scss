@@ -1,6 +1,20 @@
 
 header {
+  margin-top: 0px;
+  margin-bottom: 10px;
   text-align: center;
+  h2 {
+    margin-bottom: 10px;
+    display: inline-block;
+  }
+  #recaps {
+    margin-bottom: 15px;
+    display: inline-block;
+    div {
+      display: inline-block;
+      border: 1px solid red;
+    }
+  }
 }
 
 #quick_adds {
@@ -27,7 +41,7 @@ header {
 
 #view_zone {
   border: 1px solid black;
-  height: 400px;
+  // height: 400px;
 
   .indiv_deal_box {
     padding-left: 20px;
