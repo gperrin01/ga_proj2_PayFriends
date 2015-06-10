@@ -15,7 +15,6 @@ class Deal < ActiveRecord::Base
   # has_many :settled_deals -> {where settled: true}, class_name: "Deal"
   def self.settled_deals
     self.where(settled: 'true')
-    # or maybe :true or maybe 'true'
   end
   def self.unsettled_deals
     self.where(settled: 'false')
@@ -25,18 +24,17 @@ class Deal < ActiveRecord::Base
   end
 
   def counterpart(current_user)
-    # binding.pry
-    # return the user in the deal who is not Gui
-    self.payer.name == current_user.name ? self.receiver.name : self.payer.name
+    # return the user in the deal who is not current_user
+    self.payer == current_user ? self.receiver.name : self.payer.name
   end
   def verb_to_describe(current_user)
-    self.payer.name == current_user.name ? 'borrows' : 'lends'
+    self.payer == current_user ? 'Give' : 'Receive from'
   end
   def time_create_readable
-    self.created_at.strftime("%d/%/%Y")
+    self.created_at.strftime("%d-%b-%Y")
   end
   def long_description(current_user)
-    "#{self.counterpart(current_user)} #{self.verb_to_describe(current_user)} #{self.amount} - #{self.description}"
+    "you #{self.verb_to_describe(current_user)} #{self.counterpart(current_user)}  #{self.amount} - #{self.description}"
   end
 
 

@@ -6,7 +6,7 @@
 
 <div id="quick_adds">
 
-  <%= form_for @deal_new do |form| %>   
+  <%= form_for @deal do |form| %>   
     <%= form.label "Quick Deal" %>
     <%= form.text_field :amount, placeholder: "Amount" %>
 
@@ -19,7 +19,7 @@
   <% end %>
 
 <!-- NEED TO RENAME THE FORM ID   because new_uuser is already taken by the login stuffs-->
-  <%= form_for @user_new, :html => { :id => "new_friend" } do |form| %>
+  <%= form_for @user, :html => { :id => "new_friend" } do |form| %>
     <%= form.text_field :name, placeholder: "Friend's name" %>
     <%= form.submit 'New friend' %>
   <% end %>
@@ -32,36 +32,35 @@
     <li><a href="">Friends</a></li>
     <li><a href="">To Pay</a></li>
     <li><a href="">To Receive</a></li>
-    <li><a href="">History</a></li>
+    <!-- <li><a href="">History</a></li> -->
   </ul>
 </div>
 
 <div id="view_zone">
 
-<div id="pending_deals" class="sub_zone">
-  <h4>Pending Deals</h4>
+  <div id="pending_deals" class="sub_zone">
 
-  <% @pending.each do |deal| %>
+    <h4>Pending Deals</h4>
 
-  <ul class='indiv_deal_box'>
-    <li class="indiv_deal_details"> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
-    <% if deal.payer.name != current_user.name  %>
-      <li class='indiv_deal_pay'><button class="pay_button" data-id=<%= deal.id %>>Pay</button></li>
+    <% @pending.each do |deal| %>
+
+    <ul class='indiv_deal_box'>
+      <li class="indiv_deal_details"> <span><%= "#{deal.time_create_readable}" %> - </span> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
+      <% if deal.payer.name != current_user.name  %>
+        <li class='indiv_deal_pay'><button class="pay_button" data-id=<%= deal.id %>>Pay</button></li>
+      <% end %>
+    </ul>
+
     <% end %>
-  </ul>
 
-  <% end %>
-</div>
+    <h4>History of Deals</h4>
 
-<div id="history" class="sub_zone hidden">
-  <h4>History of Deals</h4>
+    <ul class='indiv_deal_box'>
+    <% @history.each do |deal| %>
+      <li class="indiv_deal_details"> <span><%= "#{deal.time_create_readable}" %> - </span> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
+    <% end %>
+    </ul>
 
-  <ul class='indiv_deal_box'>
-  <%# @history.each do |deal| %>
-    <li class="indiv_deal_details"> <%#=
-       deal.long_description %></li>
-  <%# end %>
-  </ul>
-</div>
+  </div>
 
 </div>

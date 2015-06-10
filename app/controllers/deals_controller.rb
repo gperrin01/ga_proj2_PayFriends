@@ -1,9 +1,13 @@
 class DealsController < ApplicationController
 
   def index
-    @pending = Deal.all.unsettled_deals.select {|deal| deal.payer.id == current_user.id || deal.receiver.id == current_user.id }.sort_by(&:updated_at)
+    @deal = Deal.new 
+    @user = User.new 
+    @users = User.all 
 
-    # @history = @deals.settled_deals.sort_by(&:created_at)
+    @pending = current_user.all_deals.select {|deal| deal.settled == false}.sort_by(&:updated_at)
+
+    @history = current_user.all_deals.select {|deal| deal.settled == true}.sort_by(&:created_at)
   end
 
   def create
@@ -21,10 +25,5 @@ class DealsController < ApplicationController
     end  
   end
 
-#  this didnt really work and returned errors:  User(#70197021758400) expected, got String(#70196953959220) - normal because param[:payer] returned a string '40' when what I want is User.find(params[:payer]) -> question is how do I define this method using this 'transformation' of the params elements
-# private
-#   def deal_params
-#     params.permit(:amount, :payer, :receiver, :description)
-#   end
 
 end
