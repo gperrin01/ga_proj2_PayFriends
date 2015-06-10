@@ -36,7 +36,6 @@ function createDeal(event) {
   }).done(function(data){
     console.log('success new deal');
     console.log(data);
-    debugger;
     appendNewDeal(data);   
   }).fail(function(data){
     console.log('failure new deal');
@@ -44,9 +43,12 @@ function createDeal(event) {
 }
 
 function appendNewDeal(data) {
-  // new_item = "<ul class='indiv_deal_box'>"
-  //   <li class="indiv_deal_details"> <a href="#">Bob borrows 10.0 - no description yet</a></li>
-  // </ul>;
+  var new_item = "<ul class='indiv_deal_box'>";
+  new_item += "<li class='indiv_deal_details'> <span>"+ data.time +"- </span> <a href='#'>"+ data.long_description +"</a> </li>"
+  if (data.long_description.includes('Receive')) {
+    new_item += "<li class='indiv_deal_pay'><button class='pay_button' data-id='"+ data.deal.id+ "'>Pay</button></li>";
+  }
+  new_item +=  "</ul>";
   $('#pending_deals').append(new_item);
 }
 
