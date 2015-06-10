@@ -35,18 +35,17 @@ function createDeal(event) {
     data: {amount: amount, payer: payer, receiver: receiver, amount: amount, description: description }  
   }).done(function(data){
     console.log('success new deal');
-    console.log(data);
-    appendNewDeal(data);
+    appendToPendingDeal(data);
 
     var amount =  data.deal.amount;
     var verb = data.long_description.split(' ')[1]
-    updateTotalBalance(amount, verb)  
+    updateTotalBalance(amount, verb, 'add')  
   }).fail(function(data){
     console.log('failure new deal');
   })
 }
 
-function appendNewDeal(data) {
+function appendToPendingDeal(data) {
   var new_item = "<ul class='indiv_deal_box'>";
   new_item += "<li class='indiv_deal_details'> <span>"+ data.time +"- </span> <a href='#'>"+ data.long_description +"</a> </li>"
   if (data.long_description.includes('Receive')) {
@@ -56,7 +55,14 @@ function appendNewDeal(data) {
   $('#pending_deals').append(new_item);
 }
 
-function updateTotalBalance(amount, verb) {
+function updateTotalBalance(amount, verb, action) {
+  // If the action is to add a deal, then we add the amount to the balance
+  // if action is to settle a deal, that means amount is paid and therefore we remove it from the balance
+
+  if (action === 'settle') {
+    amount = amount * (-1);
+  }
+
   if (verb === 'Give'){
     var balance = parseFloat($('#recap_to_receive').text())
     balance += amount
@@ -68,8 +74,38 @@ function updateTotalBalance(amount, verb) {
   }
 }
 
+function settleDeal() {
+  // mark as settled, remove from the balances, and append to the history
+
+  console.log('settle deal');
+  var id = $(this).attr("data-id")
+
+  $.ajax({
+    type: 'PUT',
+    url: '/deals/'+id,
+    dataType: 'json',
+    data: {id: id}  
+  }).done(function(data){
+    console.log(data);
+    console.log('succes settle it');
+    appendToHistory(data)
+
+    var amount =  data.deal.amount;
+    var verb = data.long_description.split(' ')[1]
+    updateTotalBalance(amount, verb, 'settle') 
+  })
+}
+
+function appendToHistory(data) {
+  var new_item = "<ul class='indiv_deal_box'>";
+  new_item += "<li class='indiv_deal_details'> <span>"+ data.time +"- </span> <a href='#'>"+ data.long_description +"</a> </li>"
+  new_item +=  "</ul>";
+  $('#history').append(new_item);
+}
+
 
 $(document).ready(function() {
   $('#new_friend').on('submit', createUser);
   $('#new_deal').on('submit', createDeal);
+  $('.pay_button').on('click', settleDeal)
 })

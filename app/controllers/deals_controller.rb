@@ -23,17 +23,27 @@ class DealsController < ApplicationController
       description = params[:deal][:description]
     end
         
-
     @deal = Deal.create amount: amount, payer: payer, receiver: receiver, description: description
-
     @time = @deal.time_create_readable
-
     @full_deal = {deal: @deal, time: @time, long_description: @deal.long_description(current_user)}
 
     respond_to do |format|
       format.html #{ redirect_to root_path }
       format.json { render json: @full_deal, status: 200 }
     end  
+  end
+
+  def update
+    @deal = Deal.find params[:id]
+    @deal.settle_now
+    @time = @deal.time_create_readable
+    @full_deal = {deal: @deal, time: @time, long_description: @deal.long_description(current_user)}
+
+    respond_to do |format|
+      format.html #{ redirect_to root_path }
+      format.json { render json: @full_deal, status: 200 }
+    end  
+
   end
 
 

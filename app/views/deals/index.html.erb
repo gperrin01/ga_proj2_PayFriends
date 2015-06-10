@@ -64,11 +64,12 @@
 
     <h4>History of Deals</h4>
 
-    <ul class='indiv_deal_box'>
     <% @history.each do |deal| %>
+    <ul class='indiv_deal_box'>
       <li class="indiv_deal_details"> <span><%= "#{deal.time_create_readable}" %> - </span> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
-    <% end %>
     </ul>
+    <% end %>
+
 
   </div>
 
