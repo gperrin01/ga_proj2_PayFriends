@@ -38,8 +38,8 @@ function createDeal(event) {
     appendToPendingDeal(data);
 
     var amount =  data.deal.amount;
-    var verb = data.long_description.split(' ')[1]
-    updateTotalBalance(amount, verb, 'add')  
+    var verb = data.long_description.split(' ')[1];
+    updateTotalBalance(amount, verb, 'add');  
   }).fail(function(data){
     console.log('failure new deal');
   })
@@ -64,21 +64,21 @@ function updateTotalBalance(amount, verb, action) {
   }
 
   if (verb === 'Give'){
-    var balance = parseFloat($('#recap_to_receive').text())
-    balance += amount
-    $('#recap_to_receive').text(balance)
+    var balance = parseFloat($('#recap_to_receive').text());
+    balance += amount;
+    $('#recap_to_receive').text(balance);
   } else if (verb === 'Receive') {
-    var balance = parseFloat($('#recap_to_pay').text())
-    balance += amount
-    $('#recap_to_pay').text(balance)
+    var balance = parseFloat($('#recap_to_pay').text());
+    balance += amount;
+    $('#recap_to_pay').text(balance);
   }
 }
 
 function settleDeal() {
-  // mark as settled, remove from the balances, and append to the history
+  // mark as settled, remove from the balances, append to the history, remove from the pending list
 
   console.log('settle deal');
-  var id = $(this).attr("data-id")
+  var id = $(this).attr("data-id");
 
   $.ajax({
     type: 'PUT',
@@ -86,13 +86,16 @@ function settleDeal() {
     dataType: 'json',
     data: {id: id}  
   }).done(function(data){
-    console.log(data);
     console.log('succes settle it');
-    appendToHistory(data)
+    appendToHistory(data);
+    
+    // remove the <ul> form the pending list - if i had $(this) i would go $(this).parent().parent()
+    var thiss = $("#pending_deals button[data-id='" +data.deal.id+ "']");
+    thiss.parent().parent().remove();
 
     var amount =  data.deal.amount;
-    var verb = data.long_description.split(' ')[1]
-    updateTotalBalance(amount, verb, 'settle') 
+    var verb = data.long_description.split(' ')[1];
+    updateTotalBalance(amount, verb, 'settle') ;
   })
 }
 
@@ -102,6 +105,7 @@ function appendToHistory(data) {
   new_item +=  "</ul>";
   $('#history').append(new_item);
 }
+
 
 
 $(document).ready(function() {
