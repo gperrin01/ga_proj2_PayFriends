@@ -5,13 +5,12 @@ function createUser(event) {
 
   $.ajax({
     type: 'POST',
-    url: '/users',
+    url: '/users/create_friend',
     dataType: 'json',
     data: {name: userName}  
   }).done(function(data){
     appendNewUser(data);
-    console.log('success');
-    console.log(data);
+    console.log('succes new user');
   })
 }
 
@@ -21,7 +20,38 @@ function appendNewUser(data){
   $('#deal_receiver').append(new_item);
 }
 
+function createDeal(event) {
+  event.preventDefault();
+  console.log('create deal');
+  var amount = $('#deal_amount').val();
+  var payer = $('#deal_payer').val();
+  var receiver = $('#deal_receiver').val();
+  var description = $('#deal_description').val();
+
+  $.ajax({
+    type: 'POST',
+    url: '/deals',
+    dataType: 'json',
+    data: {amount: amount, payer: payer, receiver: receiver, amount: amount, description: description }  
+  }).done(function(data){
+    console.log('success new deal');
+    console.log(data);
+    debugger;
+    appendNewDeal(data);   
+  }).fail(function(data){
+    console.log('failure new deal');
+  })
+}
+
+function appendNewDeal(data) {
+  // new_item = "<ul class='indiv_deal_box'>"
+  //   <li class="indiv_deal_details"> <a href="#">Bob borrows 10.0 - no description yet</a></li>
+  // </ul>;
+  $('#pending_deals').append(new_item);
+}
+
 
 $(document).ready(function() {
-  $('#new_user').on('submit', createUser);
+  $('#new_friend').on('submit', createUser);
+  $('#new_deal').on('submit', createDeal);
 })

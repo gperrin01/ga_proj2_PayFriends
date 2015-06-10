@@ -24,18 +24,19 @@ class Deal < ActiveRecord::Base
     self.update(settled: 'true')
   end
 
-  def counterpart
+  def counterpart(current_user)
+    # binding.pry
     # return the user in the deal who is not Gui
-    self.payer.name == 'Gui' ? self.receiver.name : self.payer.name
+    self.payer.name == current_user.name ? self.receiver.name : self.payer.name
   end
-  def verb_to_describe
-    self.payer.name == 'Gui' ? 'borrows' : 'lends'
+  def verb_to_describe(current_user)
+    self.payer.name == current_user.name ? 'borrows' : 'lends'
   end
   def time_create_readable
     self.created_at.strftime("%d/%/%Y")
   end
-  def long_description
-    "#{self.counterpart} #{self.verb_to_describe} #{self.amount} - #{self.description}"
+  def long_description(current_user)
+    "#{self.counterpart(current_user)} #{self.verb_to_describe(current_user)} #{self.amount} - #{self.description}"
   end
 
 

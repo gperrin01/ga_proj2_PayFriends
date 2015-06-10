@@ -13,11 +13,16 @@ class ApplicationController < ActionController::Base
     @user_new = User.new
   end
 
-  #   private
-  # def current_user
-  #   @_current_user ||= session[:current_user_id] &&
-  #     User.find_by(id: session[:current_user_id])
-  # end
+  helper_method :current_user
+  # helper method means we can use it in the view !
+  private
+  def current_user
+    begin
+      @current_user ||= User.find(session[:user_id]) if session[:user_id]
+    rescue ActiveRecord::RecordNotFound
+      session[:user_id] = nil
+    end
+  end
   
  
 

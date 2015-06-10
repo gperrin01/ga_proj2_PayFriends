@@ -1,7 +1,7 @@
 <header>
   <h2>Pay Friends</h2>
 
-  <h4><%= session[:logged_in].name %> => To Pay <%= session[:logged_in].to_pay %> To Receive <%= session[:logged_in].to_receive %></h4>
+  <h4><%= current_user.name %> => To Pay <%= current_user.to_pay %> To Receive <%= current_user.to_receive %></h4>
 </header>
 
 <div id="quick_adds">
@@ -18,7 +18,8 @@
     <%= form.submit 'Submit' %>
   <% end %>
 
-  <%= form_for @user_new do |form| %>
+<!-- NEED TO RENAME THE FORM ID   because new_uuser is already taken by the login stuffs-->
+  <%= form_for @user_new, :html => { :id => "new_friend" } do |form| %>
     <%= form.text_field :name, placeholder: "Friend's name" %>
     <%= form.submit 'New friend' %>
   <% end %>
@@ -43,8 +44,8 @@
   <% @pending.each do |deal| %>
 
   <ul class='indiv_deal_box'>
-    <li class="indiv_deal_details"> <%= link_to "#{deal.long_description}", '#' %></li>
-    <% if deal.payer.name != session[:logged_in].name  %>
+    <li class="indiv_deal_details"> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
+    <% if deal.payer.name != current_user.name  %>
       <li class='indiv_deal_pay'><button class="pay_button" data-id=<%= deal.id %>>Pay</button></li>
     <% end %>
   </ul>
@@ -56,9 +57,10 @@
   <h4>History of Deals</h4>
 
   <ul class='indiv_deal_box'>
-  <% @history.each do |deal| %>
-    <li class="indiv_deal_details"> <%= deal.long_description %></li>
-  <% end %>
+  <%# @history.each do |deal| %>
+    <li class="indiv_deal_details"> <%#=
+       deal.long_description %></li>
+  <%# end %>
   </ul>
 </div>
 
