@@ -2,37 +2,3 @@
   border: 1px solid blue;
   margin: 0 30px;
 }
-
-header {
-  text-align: center;
-}
-
-#quick_adds {
-  * {
-    display: inline-block;
-  }
-  #new_deal {
-    #deal_amount {
-      width: 80px;
-    }
-  }
-  #new_user {
-    position: relative;
-    left: 316px;
-  }
-}
-#quick_menu {
-  text-align: center;
-  li {
-    display: inline;
-    padding: 0 10px;
-  }
-}
-
-#view_zone {
-  border: 1px solid black;
-  height: 400px;
-}
-.hidden {
-  display: none;
-}

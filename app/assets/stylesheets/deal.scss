@@ -1,12 +1,49 @@
-.indiv_deal_box {
-  padding-left: 20px;
-  li {
-    display: inline;
+
+header {
+  text-align: center;
+}
+
+#quick_adds {
+  * {
+    display: inline-block;
   }
-  .indiv_deal_details {
-    padding-right: 5px;
-    span {
-      font-size: 10px;
+  #new_deal {
+    #deal_amount {
+      width: 80px;
     }
   }
+  #new_friend {
+    position: relative;
+    left: 316px;
+  }
+}
+#quick_menu {
+  text-align: center;
+  li {
+    display: inline;
+    padding: 0 10px;
+  }
+}
+
+#view_zone {
+  border: 1px solid black;
+  height: 400px;
+
+  .indiv_deal_box {
+    padding-left: 20px;
+    li {
+      display: inline;
+    }
+    .indiv_deal_details {
+      padding-right: 5px;
+      span {
+        font-size: 10px;
+      }
+    }
+  }
+}
+
+
+.hidden {
+  display: none;
 }
