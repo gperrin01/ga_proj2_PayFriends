@@ -36,7 +36,11 @@ function createDeal(event) {
   }).done(function(data){
     console.log('success new deal');
     console.log(data);
-    appendNewDeal(data);   
+    appendNewDeal(data);
+
+    var amount =  data.deal.amount;
+    var verb = data.long_description.split(' ')[1]
+    updateTotalBalance(amount, verb)  
   }).fail(function(data){
     console.log('failure new deal');
   })
@@ -50,6 +54,18 @@ function appendNewDeal(data) {
   }
   new_item +=  "</ul>";
   $('#pending_deals').append(new_item);
+}
+
+function updateTotalBalance(amount, verb) {
+  if (verb === 'Give'){
+    var balance = parseFloat($('#recap_to_receive').text())
+    balance += amount
+    $('#recap_to_receive').text(balance)
+  } else if (verb === 'Receive') {
+    var balance = parseFloat($('#recap_to_pay').text())
+    balance += amount
+    $('#recap_to_pay').text(balance)
+  }
 }
 
 
