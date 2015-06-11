@@ -49,7 +49,7 @@
   
   <div id="left_column" class='column'>
 
-    <div id="pending_deals" class="sub_zone">
+    <div id="pending_deals" class="sub_zone js_sub_zone">
       <h4 class='active_menu'>Gotta take care of these bad boys.</h4>
 
       <% @pending.each do |deal| %>
@@ -63,7 +63,7 @@
       <% end %>
     </div>
 
-    <div id="history" class="sub_zone hidden">
+    <div id="history" class="sub_zone js_sub_zone hidden">
       <h4 class='active_menu'>Things of the past.</h4>
 
       <% @history.each do |deal| %>
@@ -73,11 +73,11 @@
       <% end %>
     </div>
 
-    <div id="friends" class="sub_zone hidden">
+    <div id="friends" class="sub_zone js_sub_zone hidden">
       <h4 class='active_menu'>Good fences make good neighbors.</h4>
     </div>
 
-    <div id="deals_to_pay" class="sub_zone hidden">
+    <div id="deals_to_pay" class="sub_zone js_sub_zone hidden">
       <h4 class='active_menu'>A Lannister always pays his debts.</h4>
 
       <% @deals_to_pay.each do |deal| %>
@@ -88,7 +88,7 @@
       <% end %>
     </div>
 
-      <div id="deals_to_receive" class="sub_zone hidden">
+      <div id="deals_to_receive" class="sub_zone js_sub_zone hidden">
       <h4 class='active_menu'>If you owe your bank a hundred pounds, you have a problem.<br> But if you owe a million, it has.</h4>
 
       <% @deals_to_receive.each do |deal| %>
@@ -103,7 +103,6 @@
   <div id="right_column" class="column">
     <div id="edit_zone" class="sub_zone">
       <h4 class='active_menu'>Make some small change.</h4>
-
 
   </div><!-- end of RIGHT column -->
 

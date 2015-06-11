@@ -124,7 +124,7 @@ function appendToHistory(data) {
 function showHideSubZones(event) {
   event.preventDefault();
   var show = $(this).attr('data-go');
-  $('.sub_zone').addClass('hidden');
+  $('.js_sub_zone').addClass('hidden');
   $(show).removeClass('hidden');
 
   // highlight the corresponding button
@@ -142,22 +142,42 @@ function showDetails () {
   }).done(function(data){
     var verb = data.long_description.split(' ')[1];
     appendToEdit(data, verb);
+    fillEditForm(data)
   })
 }
 
 function appendToEdit(data, verb) {
   $('#edit_zone .indiv_deal_box').remove();
-  var new_item = "<ul class='indiv_deal_box'>";
-  new_item += "<li class='indiv_deal_details'> <span>"+ data.time +"- </span> <a href='#'>"+ data.long_description +"</a> </li>"
+  $('#edit_zone p').remove();
+  $('#edit_zone form').remove();
+  var new_item = ""
 
-  if (verb === 'Owe') {
-    new_item += "<li class='indiv_deal_pay'><button class='pay_button' data-id='"+ data.deal.id+ "'>Pay</button></li>";
+  if (data.deal.settled === 't') {
+      new_item = "<p>You cannot edit a deal already settled</p>";
+  } 
+
+  else if (data.deal.settled === 'false') {
+    new_item = "<ul class='indiv_deal_box'>";
+    new_item += "<li class='indiv_deal_details'> <span>"+ data.time +"- </span> <a href='#'>"+ data.long_description +"</a> </li>";
+
+    if (verb === 'Owe') {
+      new_item += "<li class='indiv_deal_pay'><button class='pay_button' data-id='"+ data.deal.id+ "'>Pay</button></li>";
+    }
+    new_item += "<li class='indiv_deal_delete'><button class='delete_button' data-id='"+ data.deal.id+ "'>Delete</button></li>";
+    new_item +=  "</ul>";
+
+    new_item += "<form class='' id='edit_deal' action='/deals/" +data.deal.id +"method='put'>";
+    new_item += "<input type='text' name='deal[amount]' id='edit_deal_amount' value=" +data.deal.amount +">";
+    new_item += "<input type='text' value="+ data.deal.description +"name='deal[description]' id='edit_deal_description'>";
+    new_item += "<input type='submit' name='commit' value='Edit'></form>"
   }
-  new_item += "<li class='indiv_deal_delete'><button class='delete_button' data-id='"+ data.deal.id+ "'>Delete</button></li>";
-  new_item +=  "</ul>";
+
   $('#edit_zone h4').after(new_item);
 }
 
+function fillEditForm(data){
+
+}
 
 
 $(document).ready(function() {
