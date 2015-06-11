@@ -109,7 +109,7 @@ function appendToHistory(data) {
 
 function showHideSubZones(event) {
   console.log('shw hide');
-  event.preventDefault
+  event.preventDefault();
   var show = $(this).attr('data-go');
   $('.sub_zone').addClass('hidden');
   $(show).removeClass('hidden');
@@ -118,7 +118,7 @@ function showHideSubZones(event) {
 $(document).ready(function() {
   $('#new_friend').on('submit', createUser);
   $('#new_deal').on('submit', createDeal);
-  $('.pay_button').on('click', settleDeal);
+  $('#view_zone').on('click', '.pay_button', settleDeal);
 
   $('#quick_menu a').on('click', showHideSubZones); 
 })

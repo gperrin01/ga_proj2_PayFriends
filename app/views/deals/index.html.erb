@@ -13,21 +13,24 @@
 <div id="quick_adds">
 
   <%= form_for @deal do |form| %>   
-    <%= form.label "Quick Deal" %>
-    <%= form.text_field :amount, placeholder: "Amount" %>
-
-    <%= form.select :payer, options_from_collection_for_select(@users, "id", "name"), prompt: current_user.name %>
-    <%= form.select :receiver, options_from_collection_for_select(@users, "id", "name"), prompt: current_user.name %>
+    <%= form.submit 'New deal' %>
+    <%= form.text_field :amount, placeholder: "$£€¥" %>
+    
+    <%= form.label "From" %>
+    <%= form.select :payer, options_from_collection_for_select(@users, "id", "name", current_user.id) %>
+    <%= form.label "To" %>
+    <%= form.select :receiver, options_from_collection_for_select(@users, "id", "name", current_user.id) %>
 
     <%= form.text_field :description %>
 
-    <%= form.submit 'Submit' %>
+    <%= form.submit 'Go!' %>
   <% end %>
 
 <!-- NEED TO RENAME THE FORM ID   because new_uuser is already taken by the login stuffs-->
   <%= form_for @user, :html => { :id => "new_friend" } do |form| %>
-    <%= form.text_field :name, placeholder: "Friend's name" %>
     <%= form.submit 'New friend' %>
+    <%= form.text_field :name, placeholder: "Friend's name" %>
+    <%= form.submit 'Go!' %>
   <% end %>
 
 </div>
@@ -36,67 +39,69 @@
 
   <div id="quick_menu">
     <ul>
-      <li><a href="" data-go='#pending_deals'>Pending</a></li>
-      <li><a href="" data-go='#friends'>Friends</a></li>
-      <li><a href="" data-go='#deals_to_pay'>To Pay</a></li>
-      <li><a href="" data-go='#deals_to_receive'>To Receive</a></li>
+      <li><a href="#" data-go='#pending_deals'>Pending</a></li>
+      <li><a href="#" data-go='#friends'>Friends</a></li>
+      <li><a href="#" data-go='#deals_to_pay'>To Pay</a></li>
+      <li><a href="#" data-go='#deals_to_receive'>To Receive</a></li>
       <!-- <li><a href="">History</a></li> -->
     </ul>
   </div>
+  
+  <div id="left_column" class='column'>
 
-  <div id="pending_deals" class="sub_zone">
-    <h4>Pending Deals</h4>
+    <div id="pending_deals" class="sub_zone">
+      <h4>Pending Deals</h4>
 
-    <% @pending.each do |deal| %>
-    <ul class='indiv_deal_box'>
-      <li class="indiv_deal_details"> <span><%= "#{deal.time_create_readable}" %> - </span> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
+      <% @pending.each do |deal| %>
+      <ul class='indiv_deal_box'>
+        <li class="indiv_deal_details"> <span><%= "#{deal.time_create_readable}" %> - </span> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
 
-      <% if deal.payer.name != current_user.name  %>
-        <li class='indiv_deal_pay'><button class="pay_button" data-id=<%= deal.id %>>Pay</button></li>
+        <% if deal.payer.name != current_user.name  %>
+          <li class='indiv_deal_pay'><button class="pay_button" data-id=<%= deal.id %>>Pay</button></li>
+        <% end %>
+      </ul>
       <% end %>
-    </ul>
-    <% end %>
+    </div>
 
-  </div>
+    <div id="history" class="sub_zone">
+      <h4>Settled Deals</h4>
 
-  <div id="history" class="sub_zone">
-    <h4>Settled Deals</h4>
+      <% @history.each do |deal| %>
+      <ul class='indiv_deal_box'>
+        <li class="indiv_deal_details"> <span><%= "#{deal.time_create_readable}" %> - </span> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
+      </ul>
+      <% end %>
+    </div>
 
-    <% @history.each do |deal| %>
-    <ul class='indiv_deal_box'>
-      <li class="indiv_deal_details"> <span><%= "#{deal.time_create_readable}" %> - </span> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
-    </ul>
-    <% end %>
+    <div id="friends" class="sub_zone hidden">
+      <h4>Good fences make good neighbors.</h4>
+    </div>
 
-  </div>
+    <div id="deals_to_pay" class="sub_zone hidden">
+      <h4>A Lannister always pays his debts.</h4>
 
-  <div id="friends" class="sub_zone hidden">
-    <h4>Good fences make good neighbors.</h4>
+      <% @deals_to_pay.each do |deal| %>
+      <ul class='indiv_deal_box'>
+        <li class="indiv_deal_details"> <span><%= "#{deal.time_create_readable}" %> - </span> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
+        <li class='indiv_deal_pay'><button class="pay_button" data-id=<%= deal.id %>>Pay</button></li>
+      </ul>
+      <% end %>
+    </div>
 
+      <div id="deals_to_receive" class="sub_zone hidden">
+      <h4>If you owe your bank a hundred pounds, you have a problem. But if you owe a million, it has.</h4>
 
-  </div>
+      <% @deals_to_receive.each do |deal| %>
+      <ul class='indiv_deal_box'>
+        <li class="indiv_deal_details"> <span><%= "#{deal.time_create_readable}" %> - </span> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
+      </ul>
+      <% end %>
+    </div>
 
-  <div id="deals_to_pay" class="sub_zone hidden">
-    <h4>A Lannister always pays his debts.</h4>
+  </div> <!-- end of LEFT column -->
 
-    <% @deals_to_pay.each do |deal| %>
-    <ul class='indiv_deal_box'>
-      <li class="indiv_deal_details"> <span><%= "#{deal.time_create_readable}" %> - </span> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
-      <li class='indiv_deal_pay'><button class="pay_button" data-id=<%= deal.id %>>Pay</button></li>
-    </ul>
-    <% end %>
+  <div id="right_column" class="column">
+      <p>RIGHT column</p>
+  </div><!-- end of RIGHT column -->
 
-  </div>
-
-    <div id="deals_to_receive" class="sub_zone hidden">
-    <h4>If you owe your bank a hundred pounds, you have a problem. But if you owe a million, it has.</h4>
-
-    <% @deals_to_receive.each do |deal| %>
-    <ul class='indiv_deal_box'>
-      <li class="indiv_deal_details"> <span><%= "#{deal.time_create_readable}" %> - </span> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
-    </ul>
-    <% end %>
-
-  </div>
-
-</div> 
+</div> <!-- end of VIEW zone -->
