@@ -11,6 +11,7 @@ Rails.application.routes.draw do
    # get '/users/login', to: 'deals#index'
    
    resources :deals
+   post '/deals/:id', to: 'deals#update'
 
    # UPDATE WITH CREAET_USERS since Devise is using my create user method!!!!!!
    post '/users/create_friend', to: 'users#create_friend'

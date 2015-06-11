@@ -39,6 +39,7 @@ class DealsController < ApplicationController
   end
 
   def update
+    binding.pry
     @deal = Deal.find params[:id]
     # @deal.settle_now
     @deal.update(params.permit(:amount, :description, :settled))
@@ -47,7 +48,8 @@ class DealsController < ApplicationController
     @full_deal = {deal: @deal, time: @time, long_description: @deal.long_description(current_user)}
 
     respond_to do |format|
-      format.html 
+      format.html { redirect_to deals_path }
+      # format.json { redirect_to deals_path }
       format.json { render json: @full_deal, status: 200 }
     end  
   end

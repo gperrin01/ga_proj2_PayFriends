@@ -175,33 +175,33 @@ function appendToEdit(data, verb) {
     new_item +=  "</ul>";
 
     new_item += "<p class='warning_in_edit'>Make changes to the deal in the below form. <br>For security reasons, making changes to the deal database will trigger an automatic refresh of your page.</p>"
-    new_item += "<form class='' id='edit_deal' action='/deals/" +data.deal.id +"' method='put' data-id='"+ data.deal.id+ "'>";
-    new_item += "<input type='text' name='deal[amount]' id='edit_deal_amount' value='" +data.deal.amount +"''>";
-    new_item += "<input type='text' value='"+ data.deal.description +"' name='deal[description]' id='edit_deal_description'>";
+    new_item += "<form class='' id='edit_deal' action='/deals/" +data.deal.id +"' method='POST' data-id='"+ data.deal.id+ "'>";
+    new_item += "<input type='text' name='amount' id='edit_deal_amount' value='" +data.deal.amount +"''>";
+    new_item += "<input type='text' value='"+ data.deal.description +"' name='description' id='edit_deal_description'>";
     new_item += "<input type='submit' name='commit' value='Edit'></form>"
   }
 
   $('#edit_zone h4').after(new_item);
 }
 
-function editDeal(event) {
-  event.preventDefault();
-  var id = $(this).attr("data-id");
-  var amount = $(this).children().first().val();
-  var description = $(this).children()[1].value;
+// WIll keep this one as a plain html requeset for now - page will refresh - no time to do the ajax impact on all other divs
+// function editDeal(event) {
+//   event.preventDefault();
+//   var id = $(this).attr("data-id");
+//   var amount = $(this).children().first().val();
+//   var description = $(this).children()[1].value;
 
-  $.ajax({
-    type: 'PUT',
-    url: '/deals/'+id,
-    dataType: 'json',
-    data: {id: id, amount: amount, description: description}  
-  }).done(function(data){
-    console.log(data);
-    debugger;
-    var verb = data.long_description.split(' ')[1];
-    // appendToEdit(data, verb);
-  })
-}
+//   $.ajax({
+//     type: 'PUT',
+//     url: '/deals/'+id,
+//     dataType: 'json',
+//     data: {id: id, amount: amount, description: description}  
+//   }).done(function(data){
+//     console.log(data);
+//     var verb = data.long_description.split(' ')[1];
+//     // appendToEdit(data, verb);
+//   })
+// }
 
 
 
@@ -216,6 +216,6 @@ $(document).ready(function() {
   $('#quick_menu a').on('click', showHideSubZones); 
   $('#view_zone').on('click', '.indiv_deal_box a', showDetails);
 
-  $('#view_zone').on('submit', '#edit_deal', editDeal);
+  // $('#view_zone').on('submit', '#edit_deal', editDeal);
 })
 
