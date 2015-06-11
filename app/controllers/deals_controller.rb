@@ -6,12 +6,12 @@ class DealsController < ApplicationController
     @users = User.all 
 
 #  Here iI MUST keep 'true' 'false', not true/false
-    @pending = current_user.all_deals.select {|deal| deal.settled == 'false'}.sort_by(&:updated_at)
+    @pending = current_user.all_deals.select {|deal| deal.settled == 'false'}.sort_by(&:updated_at).reverse
     # binding.pry
-    @history = current_user.all_deals.select {|deal| deal.settled == 't'}.sort_by(&:created_at)
+    @history = current_user.all_deals.select {|deal| deal.settled == 't'}.sort_by(&:created_at).reverse
 
-    @deals_to_pay = @pending.select {|deal| deal.receiver == current_user }.sort_by(&:amount)
-    @deals_to_receive = @pending.select {|deal| deal.payer == current_user }.sort_by(&:amount)
+    @deals_to_pay = @pending.select {|deal| deal.receiver == current_user }.sort_by(&:amount).reverse
+    @deals_to_receive = @pending.select {|deal| deal.payer == current_user }.sort_by(&:amount).reverse
   end
 
   def create
@@ -39,7 +39,7 @@ class DealsController < ApplicationController
   end
 
   def update
-    binding.pry
+
     @deal = Deal.find params[:id]
     # @deal.settle_now
     @deal.update(params.permit(:amount, :description, :settled))
