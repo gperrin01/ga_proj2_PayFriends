@@ -6,22 +6,21 @@ class Deal < ActiveRecord::Base
   belongs_to :payer, class_name: "User", foreign_key: "payer_id"
   belongs_to :receiver, class_name: "User", foreign_key: "receiver_id"
 
-  after_initialize :defaults
-  def defaults
-    self.description = 'no description yet'
-    self.settled = 'false'
-  end
+  # after_initialize :defaults
+  # def defaults
+  #   self.description = 'no description yet'
+  #   self.settled = 'false'
+  # end
 
   # has_many :settled_deals -> {where settled: true}, class_name: "Deal"
   def self.settled_deals
-    self.where(settled: 'true')
+    self.where(settled: true)
   end
   def self.unsettled_deals
-    self.where(settled: 'false')
+    self.where(settled: false)
   end
   def settle_now
-    self.settled = 'true'
-    self.save
+    self.update(settled: true)
   end
 
   def counterpart(current_user)
@@ -29,7 +28,7 @@ class Deal < ActiveRecord::Base
     self.payer == current_user ? self.receiver.name : self.payer.name
   end
   def verb_to_describe(current_user)
-    self.payer == current_user ? 'Give' : 'Receive from'
+    self.payer == current_user ? 'Give' : 'Owe'
   end
   def time_create_readable
     self.created_at.strftime("%d-%b-%Y")

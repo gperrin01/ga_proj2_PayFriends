@@ -48,7 +48,7 @@ function createDeal(event) {
 function appendToPendingDeal(data) {
   var new_item = "<ul class='indiv_deal_box'>";
   new_item += "<li class='indiv_deal_details'> <span>"+ data.time +"- </span> <a href='#'>"+ data.long_description +"</a> </li>"
-  if (data.long_description.includes('Receive')) {
+  if (data.long_description.includes('Owe')) {
     new_item += "<li class='indiv_deal_pay'><button class='pay_button' data-id='"+ data.deal.id+ "'>Pay</button></li>";
   }
   new_item +=  "</ul>";
@@ -67,7 +67,7 @@ function updateTotalBalance(amount, verb, action) {
     var balance = parseFloat($('#recap_to_receive').text());
     balance += amount;
     $('#recap_to_receive').text(balance);
-  } else if (verb === 'Receive') {
+  } else if (verb === 'Owe') {
     var balance = parseFloat($('#recap_to_pay').text());
     balance += amount;
     $('#recap_to_pay').text(balance);
@@ -86,7 +86,7 @@ function settleDeal() {
     dataType: 'json',
     data: {id: id}  
   }).done(function(data){
-    debugger;
+    // debugger;
     console.log('succes settle it');
     appendToHistory(data);
     

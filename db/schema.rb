@@ -11,17 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150610095117) do
+ActiveRecord::Schema.define(version: 20150611075020) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
   create_table "deals", force: :cascade do |t|
     t.float    "amount"
-    t.string   "description"
-    t.boolean  "settled"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.string   "description", default: "No description yet"
+    t.string   "settled",     default: "false"
+    t.datetime "created_at",                                 null: false
+    t.datetime "updated_at",                                 null: false
     t.integer  "payer_id"
     t.integer  "receiver_id"
   end

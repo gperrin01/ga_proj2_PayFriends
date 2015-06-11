@@ -5,9 +5,10 @@ class DealsController < ApplicationController
     @user = User.new 
     @users = User.all 
 
-    @pending = current_user.all_deals.select {|deal| deal.settled == false}.sort_by(&:updated_at)
-
-    @history = current_user.all_deals.select {|deal| deal.settled == true}.sort_by(&:created_at)
+#  Here iI MUST keep 'true' 'false', not true/false
+    @pending = current_user.all_deals.select {|deal| deal.settled == 'false'}.sort_by(&:updated_at)
+    # binding.pry
+    @history = current_user.all_deals.select {|deal| deal.settled == 't'}.sort_by(&:created_at)
 
     @deals_to_pay = @pending.select {|deal| deal.receiver == current_user }.sort_by(&:amount)
     @deals_to_receive = @pending.select {|deal| deal.payer == current_user }.sort_by(&:amount)
