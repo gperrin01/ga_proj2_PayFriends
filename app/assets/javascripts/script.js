@@ -174,7 +174,7 @@ function appendToEdit(data, verb) {
     new_item += "<li class='indiv_deal_delete'><button class='delete_button' data-id='"+ data.deal.id+ "'>Delete</button></li>";
     new_item +=  "</ul>";
 
-    new_item += "<p class='warning_in_edit'>Make changes to the deal in the below form. <br>For security reasons, making changes to the deal database will trigger an automatic refresh of your page.</p>"
+    new_item += "<p class='warning_in_edit'>Make changes to the deal in the below form. <br><br>For security reasons, making changes to the deal database will trigger an automatic refresh of your page.</p>"
     new_item += "<form class='' id='edit_deal' action='/deals/" +data.deal.id +"' method='POST' data-id='"+ data.deal.id+ "'>";
     new_item += "<input type='text' name='amount' id='edit_deal_amount' value='" +data.deal.amount +"''>";
     new_item += "<input type='text' value='"+ data.deal.description +"' name='description' id='edit_deal_description'>";

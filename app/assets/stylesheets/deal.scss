@@ -3,18 +3,23 @@ header {
   margin-top: 0px;
   margin-bottom: 10px;
   text-align: center;
-  h2 {
-    margin-bottom: 10px;
-    display: inline-block;
-  }
+  width: 700px;
+  margin: 0 auto;
+  // h2 {
+  //   margin-bottom: 10px;
+  //   display: inline-block;
+  // }
   #recaps {
     margin-bottom: 15px;
     display: inline-block;
     div {
       display: inline-block;
-      border: 1px solid red;
+      border: 1px solid;
       padding: 0 10px;
-      border-radius: 15px;
+      border-radius: 20px;
+      color: rgba(26, 18, 148, 0.7);
+      width: 100px;  
+      margin: 10px 0;
     }
   }
 }
@@ -41,7 +46,7 @@ header {
       border-radius: 10px;
       padding: 2px 8px 2px 6px;
     }
-    input[type="submit"] {
+    input[type="submit"], .delete_button{
       font-style: italic;
       background-color: rgba(34, 108, 224, 0.4);
       border: 1px outset buttonface;
@@ -129,6 +134,47 @@ header {
     }    
   } // end of sub zone
 
+  #edit_zone {
+    text-align: center;
+    .warning_in_edit {
+      text-decoration: italic;
+      font-style: sans-serif;
+      color: darkgrey;
+      text-align: center;
+    }
+    form {
+      color: rgb(99, 98, 116);
+      text-align: center;
+      margin-bottom: 15px;  
+      // .delete_button {
+      //   border-radius: 20px;
+      //   font-size: 14px;
+      //   font-style: italic;
+      //   padding: 2px 9px 2px 7px;
+      //   background-color: rgba(34, 108, 224, 0.67);
+      //   border: 1px outset buttonface;
+      // }    
+      button, select {
+        font-size: 15px;
+        border-radius: 10px;
+      }
+      label {
+        font-size: 14px;
+        font-style: italic;
+      }
+      input {
+        line-height: normal;
+        font-size: 14px;
+        border-radius: 10px;
+        padding: 4px 8px 4px 6px;
+      }
+      input[type="submit"] {
+        font-style: italic;
+        background-color: rgba(34, 108, 224, 0.4);
+        border: 1px outset buttonface;
+      }
+    }
+  }
 } // end of view zone
 
 #view_zone #history a {
