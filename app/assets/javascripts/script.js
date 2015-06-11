@@ -35,24 +35,34 @@ function createDeal(event) {
     data: {amount: amount, payer: payer, receiver: receiver, amount: amount, description: description }  
   }).done(function(data){
     console.log('success new deal');
-    appendToPendingDeal(data);
-
     var amount =  data.deal.amount;
+    // check if deal is I GIVE or I PAY
     var verb = data.long_description.split(' ')[1];
+
+    appendDeal(data, verb);
     updateTotalBalance(amount, verb, 'add');  
+
   }).fail(function(data){
     console.log('failure new deal');
   })
 }
 
-function appendToPendingDeal(data) {
+function appendDeal(data, verb) {
   var new_item = "<ul class='indiv_deal_box'>";
   new_item += "<li class='indiv_deal_details'> <span>"+ data.time +"- </span> <a href='#'>"+ data.long_description +"</a> </li>"
-  if (data.long_description.includes('Owe')) {
+
+  // if I OWE in the deal: add pay button, add to pending, add to to_pay
+  if (verb === 'Owe') {
     new_item += "<li class='indiv_deal_pay'><button class='pay_button' data-id='"+ data.deal.id+ "'>Pay</button></li>";
+    new_item +=  "</ul>";
+    $('#deals_to_pay').append(new_item);
+  } else if (verb === 'Give') {
+    new_item +=  "</ul>";
+    $('#deals_to_receive').append(new_item);
   }
-  new_item +=  "</ul>";
   $('#pending_deals').append(new_item);
+  
+// not yet added to the list with your friends
 }
 
 function updateTotalBalance(amount, verb, action) {
