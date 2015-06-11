@@ -101,20 +101,24 @@ function settleDeal() {
     var amount =  data.deal.amount;
     var verb = data.long_description.split(' ')[1];
     updateTotalBalance(amount, verb, 'settle') ;
-
-    // remove the <ul> form the pending list, and from topay or toreceive, accordingly
-    // - if i had $(this) i would go $(this).parent().parent()
-    var thiss = $("#pending_deals button[data-id='" +data.deal.id+ "']");
-    thiss.parent().parent().remove();
-
-    if (verb === 'Give') {
-      thiss = $("#deals_to_receive button[data-id='" +data.deal.id+ "']");
-      thiss.parent().parent().remove();
-    } else if (verb === 'Owe') {
-      thiss = $("#deals_to_pay button[data-id='" +data.deal.id+ "']");
-      thiss.parent().parent().remove();
-    }
+    removeFromSubZones(data.deal.id, verb);
   })
+}
+
+function removeFromSubZones(deal_id, verb) {
+  // remove the <ul> form the pending list, and from topay or toreceive, accordingly
+    // - if i had $(this) i would go $(this).parent().parent()
+
+  var thiss = $("#pending_deals button[data-id='" +deal_id+ "']");
+  thiss.parent().parent().remove();
+
+  if (verb === 'Give') {
+    thiss = $("#deals_to_receive button[data-id='" +deal_id+ "']");
+    thiss.parent().parent().remove();
+  } else if (verb === 'Owe') {
+    thiss = $("#deals_to_pay button[data-id='" +deal_id+ "']");
+    thiss.parent().parent().remove();
+  }
 }
 
 function appendToHistory(data) {

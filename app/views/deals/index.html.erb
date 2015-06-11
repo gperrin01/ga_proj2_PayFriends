@@ -50,7 +50,7 @@
   <div id="left_column" class='column'>
 
     <div id="pending_deals" class="sub_zone">
-      <h4>Gotta take care of these bad boys.</h4>
+      <h4 class='active_menu'>Gotta take care of these bad boys.</h4>
 
       <% @pending.each do |deal| %>
       <ul class='indiv_deal_box'>
@@ -64,7 +64,7 @@
     </div>
 
     <div id="history" class="sub_zone hidden">
-      <h4>Things of the past</h4>
+      <h4 class='active_menu'>Things of the past.</h4>
 
       <% @history.each do |deal| %>
       <ul class='indiv_deal_box'>
@@ -74,11 +74,11 @@
     </div>
 
     <div id="friends" class="sub_zone hidden">
-      <h4>Good fences make good neighbors.</h4>
+      <h4 class='active_menu'>Good fences make good neighbors.</h4>
     </div>
 
     <div id="deals_to_pay" class="sub_zone hidden">
-      <h4>A Lannister always pays his debts.</h4>
+      <h4 class='active_menu'>A Lannister always pays his debts.</h4>
 
       <% @deals_to_pay.each do |deal| %>
       <ul class='indiv_deal_box'>
@@ -89,7 +89,7 @@
     </div>
 
       <div id="deals_to_receive" class="sub_zone hidden">
-      <h4>If you owe your bank a hundred pounds, you have a problem. But if you owe a million, it has.</h4>
+      <h4 class='active_menu'>If you owe your bank a hundred pounds, you have a problem.<br> But if you owe a million, it has.</h4>
 
       <% @deals_to_receive.each do |deal| %>
       <ul class='indiv_deal_box'>
