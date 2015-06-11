@@ -101,9 +101,9 @@ function settleDeal() {
 }
 
 function removeFromSubZones(deal_id, verb) {
-  // remove the <ul> form the pending list, and from topay or toreceive, accordingly
-    // - if i had $(this) i would go $(this).parent().parent()
+  // remove <ul> from: pending list,topay / toreceive, and the edit view
 
+  clearEditZone('show_note');
   var thiss = $("#pending_deals button[data-id='" +deal_id+ "']");
   thiss.parent().parent().remove();
 
@@ -134,6 +134,15 @@ function showHideSubZones(event) {
   $(this).addClass('active_menu');
 }
 
+function clearEditZone(action) {
+  $('#edit_zone :not(h4, .come_back)').remove();
+  if (action === 'hide_note') {
+  $('.come_back').addClass('hidden');
+  } else if (action === 'show_note') {
+    $('.come_back').removeClass('hidden');
+  }
+}
+
 function showDetails () {
   var id = $(this).attr("data-deal-id");
   $.ajax({
@@ -148,9 +157,7 @@ function showDetails () {
 }
 
 function appendToEdit(data, verb) {
-  $('#edit_zone .indiv_deal_box').remove();
-  $('#edit_zone p').remove();
-  $('#edit_zone form').remove();
+  clearEditZone('hide_note');
   var new_item = ""
 
   if (data.deal.settled === 't') {
