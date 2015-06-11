@@ -8,6 +8,9 @@ class DealsController < ApplicationController
     @pending = current_user.all_deals.select {|deal| deal.settled == false}.sort_by(&:updated_at)
 
     @history = current_user.all_deals.select {|deal| deal.settled == true}.sort_by(&:created_at)
+
+    @deals_to_pay = @pending.select {|deal| deal.receiver == current_user }.sort_by(&:amount)
+    @deals_to_receive = @pending.select {|deal| deal.payer == current_user }.sort_by(&:amount)
   end
 
   def create

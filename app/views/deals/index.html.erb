@@ -36,10 +36,10 @@
 
   <div id="quick_menu">
     <ul>
-      <li><a href="">Pending</a></li>
-      <li><a href="">Friends</a></li>
-      <li><a href="">To Pay</a></li>
-      <li><a href="">To Receive</a></li>
+      <li><a href="" data-go='#pending_deals'>Pending</a></li>
+      <li><a href="" data-go='#friends'>Friends</a></li>
+      <li><a href="" data-go='#deals_to_pay'>To Pay</a></li>
+      <li><a href="" data-go='#deals_to_receive'>To Receive</a></li>
       <!-- <li><a href="">History</a></li> -->
     </ul>
   </div>
@@ -50,7 +50,7 @@
     <% @pending.each do |deal| %>
     <ul class='indiv_deal_box'>
       <li class="indiv_deal_details"> <span><%= "#{deal.time_create_readable}" %> - </span> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
-      
+
       <% if deal.payer.name != current_user.name  %>
         <li class='indiv_deal_pay'><button class="pay_button" data-id=<%= deal.id %>>Pay</button></li>
       <% end %>
@@ -63,6 +63,29 @@
     <h4>History of Deals</h4>
 
     <% @history.each do |deal| %>
+    <ul class='indiv_deal_box'>
+      <li class="indiv_deal_details"> <span><%= "#{deal.time_create_readable}" %> - </span> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
+    </ul>
+    <% end %>
+
+  </div>
+
+  <div id="deals_to_pay" class="sub_zone hidden">
+    <h4>A Lannister always pays his debts.</h4>
+
+    <% @deals_to_pay.each do |deal| %>
+    <ul class='indiv_deal_box'>
+      <li class="indiv_deal_details"> <span><%= "#{deal.time_create_readable}" %> - </span> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
+      <li class='indiv_deal_pay'><button class="pay_button" data-id=<%= deal.id %>>Pay</button></li>
+    </ul>
+    <% end %>
+
+  </div>
+
+    <div id="deals_to_receive" class="sub_zone hidden">
+    <h4>If you owe your bank a hundred pounds, you have a problem. But if you owe a million, it has.</h4>
+
+    <% @deals_to_receive.each do |deal| %>
     <ul class='indiv_deal_box'>
       <li class="indiv_deal_details"> <span><%= "#{deal.time_create_readable}" %> - </span> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
     </ul>
