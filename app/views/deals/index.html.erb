@@ -16,8 +16,8 @@
     <%= form.label "Quick Deal" %>
     <%= form.text_field :amount, placeholder: "Amount" %>
 
-    <%= form.select :payer, options_from_collection_for_select(@users, "id", "name"), prompt: 'Payer' %>
-    <%= form.select :receiver, options_from_collection_for_select(@users, "id", "name"), prompt: 'Receiver' %>
+    <%= form.select :payer, options_from_collection_for_select(@users, "id", "name"), prompt: current_user.name %>
+    <%= form.select :receiver, options_from_collection_for_select(@users, "id", "name"), prompt: current_user.name %>
 
     <%= form.text_field :description %>
 
