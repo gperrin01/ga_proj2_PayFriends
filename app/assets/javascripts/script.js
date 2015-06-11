@@ -55,12 +55,12 @@ function appendDeal(data, verb) {
   if (verb === 'Owe') {
     new_item += "<li class='indiv_deal_pay'><button class='pay_button' data-id='"+ data.deal.id+ "'>Pay</button></li>";
     new_item +=  "</ul>";
-    $('#deals_to_pay').append(new_item);
+    $('#deals_to_pay h4').after(new_item);
   } else if (verb === 'Give') {
     new_item +=  "</ul>";
-    $('#deals_to_receive').append(new_item);
+    $('#deals_to_receive h4').after(new_item);
   }
-  $('#pending_deals').append(new_item);
+  $('#pending_deals h4').after(new_item);
   
 // not yet added to the list with your friends
 }
@@ -89,24 +89,31 @@ function settleDeal() {
 
   console.log('settle deal');
   var id = $(this).attr("data-id");
-
   $.ajax({
     type: 'PUT',
     url: '/deals/'+id,
     dataType: 'json',
     data: {id: id}  
   }).done(function(data){
-    // debugger;
+
     console.log('succes settle it');
     appendToHistory(data);
-    
-    // remove the <ul> form the pending list - if i had $(this) i would go $(this).parent().parent()
-    var thiss = $("#pending_deals button[data-id='" +data.deal.id+ "']");
-    thiss.parent().parent().remove();
-
     var amount =  data.deal.amount;
     var verb = data.long_description.split(' ')[1];
     updateTotalBalance(amount, verb, 'settle') ;
+
+    // remove the <ul> form the pending list, and from topay or toreceive, accordingly
+    // - if i had $(this) i would go $(this).parent().parent()
+    var thiss = $("#pending_deals button[data-id='" +data.deal.id+ "']");
+    thiss.parent().parent().remove();
+
+    if (verb === 'Give') {
+      thiss = $("#deals_to_receive button[data-id='" +data.deal.id+ "']");
+      thiss.parent().parent().remove();
+    } else if (verb === 'Owe') {
+      thiss = $("#deals_to_pay button[data-id='" +data.deal.id+ "']");
+      thiss.parent().parent().remove();
+    }
   })
 }
 
@@ -114,11 +121,10 @@ function appendToHistory(data) {
   var new_item = "<ul class='indiv_deal_box'>";
   new_item += "<li class='indiv_deal_details'> <span>"+ data.time +"- </span> <a href='#'>"+ data.long_description +"</a> </li>"
   new_item +=  "</ul>";
-  $('#history').append(new_item);
+  $('#history h4').after(new_item);
 }
 
 function showHideSubZones(event) {
-  console.log('shw hide');
   event.preventDefault();
   var show = $(this).attr('data-go');
   $('.sub_zone').addClass('hidden');

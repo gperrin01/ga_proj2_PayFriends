@@ -43,14 +43,14 @@
       <li><a href="#" data-go='#friends'>Friends</a></li>
       <li><a href="#" data-go='#deals_to_pay'>To Pay</a></li>
       <li><a href="#" data-go='#deals_to_receive'>To Receive</a></li>
-      <!-- <li><a href="">History</a></li> -->
+      <li><a href="#" data-go='#history'>History</a></li>
     </ul>
   </div>
   
   <div id="left_column" class='column'>
 
     <div id="pending_deals" class="sub_zone">
-      <h4>For your eyes only</h4>
+      <h4>Gotta take care of these bad boys.</h4>
 
       <% @pending.each do |deal| %>
       <ul class='indiv_deal_box'>
@@ -63,7 +63,7 @@
       <% end %>
     </div>
 
-    <div id="history" class="sub_zone">
+    <div id="history" class="sub_zone hidden">
       <h4>Things of the past</h4>
 
       <% @history.each do |deal| %>
