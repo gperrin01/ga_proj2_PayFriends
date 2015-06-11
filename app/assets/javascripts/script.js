@@ -111,8 +111,8 @@ function showHideSubZones(event) {
   console.log('shw hide');
   event.preventDefault
   var show = $(this).attr('data-go');
-  $('.sub_zone').hide();
-  $(show).show();
+  $('.sub_zone').addClass('hidden');
+  $(show).removeClass('hidden');
 }
 
 $(document).ready(function() {

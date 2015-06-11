@@ -60,13 +60,19 @@
   </div>
 
   <div id="history" class="sub_zone">
-    <h4>History of Deals</h4>
+    <h4>Settled Deals</h4>
 
     <% @history.each do |deal| %>
     <ul class='indiv_deal_box'>
       <li class="indiv_deal_details"> <span><%= "#{deal.time_create_readable}" %> - </span> <%= link_to "#{deal.long_description(current_user)}", '#' %></li>
     </ul>
     <% end %>
+
+  </div>
+
+  <div id="friends" class="sub_zone hidden">
+    <h4>Good fences make good neighbors.</h4>
+
 
   </div>
 
