@@ -40,7 +40,8 @@ class DealsController < ApplicationController
 
   def update
     @deal = Deal.find params[:id]
-    @deal.settle_now
+    # @deal.settle_now
+    @deal.update(params.permit(:amount, :description, :settled))
     @time = @deal.time_create_readable
 
     @full_deal = {deal: @deal, time: @time, long_description: @deal.long_description(current_user)}

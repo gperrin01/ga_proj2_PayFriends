@@ -18,10 +18,10 @@ class User < ActiveRecord::Base
   end
 
   def to_receive
-    self.deals_as_payer.select {|deal| deal.settled == 'false'}.map(&:amount).inject(&:+)
+    self.deals_as_payer.select {|deal| deal.settled == 'false'}.map(&:amount).inject(&:+) || 0
   end
   def to_pay
-    self.deals_as_receiver.select {|deal| deal.settled == 'false'}.map(&:amount).inject(&:+)
+    self.deals_as_receiver.select {|deal| deal.settled == 'false'}.map(&:amount).inject(&:+) || 0
   end
 
   def recap_balance(other_user)

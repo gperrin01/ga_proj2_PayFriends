@@ -45,7 +45,8 @@ function createDeal(event) {
 
 function appendDeal(data, verb) {
   var new_item = "<ul class='indiv_deal_box'>";
-  new_item += "<li class='indiv_deal_details'> <span>"+ data.time +"- </span> <a href='#'>"+ data.long_description +"</a> </li>"
+  new_item += "<li class='indiv_deal_details'> <span>"+ data.time +"- </span>";
+  new_item += "<a href='#' data-deal-id='" +data.deal.id+ "'>"+ data.long_description +"</a> </li>"
 
   // if I OWE in the deal: add pay button, add to pending, add to to_pay
   if (verb === 'Owe') {
@@ -87,7 +88,7 @@ function settleDeal() {
     type: 'PUT',
     url: '/deals/'+id,
     dataType: 'json',
-    data: {id: id}  
+    data: {id: id, settled: 't'}  
   }).done(function(data){
 
     console.log('succes settle it');
@@ -143,7 +144,6 @@ function showDetails () {
   }).done(function(data){
     var verb = data.long_description.split(' ')[1];
     appendToEdit(data, verb);
-    fillEditForm(data)
   })
 }
 
@@ -154,7 +154,7 @@ function appendToEdit(data, verb) {
   var new_item = ""
 
   if (data.deal.settled === 't') {
-      new_item = "<p>You cannot edit a deal already settled</p>";
+      new_item = "<p class='warning_in_edit'>You cannot edit a deal already settled</p>";
   } 
 
   else if (data.deal.settled === 'false') {
@@ -167,18 +167,37 @@ function appendToEdit(data, verb) {
     new_item += "<li class='indiv_deal_delete'><button class='delete_button' data-id='"+ data.deal.id+ "'>Delete</button></li>";
     new_item +=  "</ul>";
 
-    new_item += "<form class='' id='edit_deal' action='/deals/" +data.deal.id +"method='put'>";
-    new_item += "<input type='text' name='deal[amount]' id='edit_deal_amount' value=" +data.deal.amount +">";
-    new_item += "<input type='text' value="+ data.deal.description +"name='deal[description]' id='edit_deal_description'>";
+    new_item += "<p class='warning_in_edit'>Make changes to the deal in the below form. <br>For security reasons, making changes to the deal database will trigger an automatic refresh of your page.</p>"
+    new_item += "<form class='' id='edit_deal' action='/deals/" +data.deal.id +"' method='put' data-id='"+ data.deal.id+ "'>";
+    new_item += "<input type='text' name='deal[amount]' id='edit_deal_amount' value='" +data.deal.amount +"''>";
+    new_item += "<input type='text' value='"+ data.deal.description +"' name='deal[description]' id='edit_deal_description'>";
     new_item += "<input type='submit' name='commit' value='Edit'></form>"
   }
 
   $('#edit_zone h4').after(new_item);
 }
 
-function fillEditForm(data){
+function editDeal(event) {
+  event.preventDefault();
+  var id = $(this).attr("data-id");
+  var amount = $(this).children().first().val();
+  var description = $(this).children()[1].value;
 
+  $.ajax({
+    type: 'PUT',
+    url: '/deals/'+id,
+    dataType: 'json',
+    data: {id: id, amount: amount, description: description}  
+  }).done(function(data){
+    console.log(data);
+    debugger;
+    var verb = data.long_description.split(' ')[1];
+    // appendToEdit(data, verb);
+  })
 }
+
+
+
 
 
 $(document).ready(function() {
@@ -189,5 +208,7 @@ $(document).ready(function() {
 
   $('#quick_menu a').on('click', showHideSubZones); 
   $('#view_zone').on('click', '.indiv_deal_box a', showDetails);
+
+  $('#view_zone').on('submit', '#edit_deal', editDeal);
 })
 
