@@ -58,7 +58,10 @@ header {
 }
 
 #view_zone {
-
+  .active_menu {
+    background-color: rgba(26, 18, 148, 0.7);
+    color: white;
+  }
   .column {
     display: inline-block;
     width: 48%;
@@ -72,7 +75,7 @@ header {
   a {
     text-decoration: none;
     border: 1px solid;
-    color: rgb(26, 18, 148);
+    color: rgba(26, 18, 148, 0.7);
     padding: 4px 10px;
     border-radius: 20px;
   }

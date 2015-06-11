@@ -129,6 +129,10 @@ function showHideSubZones(event) {
   var show = $(this).attr('data-go');
   $('.sub_zone').addClass('hidden');
   $(show).removeClass('hidden');
+
+  // highlight the corresponding button
+  $('#quick_menu a').removeClass('active_menu');
+  $(this).addClass('active_menu');
 }
 
 $(document).ready(function() {
