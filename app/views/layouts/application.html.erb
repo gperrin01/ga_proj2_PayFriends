@@ -16,7 +16,7 @@
 <% end %>
 
 <% if current_user %>
-  <p id='login_mini_msg'>Logged in as <%= current_user.name %> | <%= link_to 'Log out', logout_path %></p>
+  <p id='login_mini_msg' class='warning_in_edit'>Logged in as <%= current_user.name %> | <%= link_to 'Log out', logout_path %></p>
 <% else %>
   <p>Please log in</p>
   <p><%= link_to 'log in', new_session_path %></p>
