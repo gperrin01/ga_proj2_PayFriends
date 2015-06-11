@@ -36,6 +36,7 @@ function createDeal(event) {
   }).done(function(data){
     console.log('success new deal');
     var amount =  data.deal.amount;
+
     // check if deal is I GIVE or I PAY
     var verb = data.long_description.split(' ')[1];
 
