@@ -34,17 +34,11 @@ function createDeal(event) {
     dataType: 'json',
     data: {amount: amount, payer: payer, receiver: receiver, amount: amount, description: description }  
   }).done(function(data){
-    console.log('success new deal');
-    var amount =  data.deal.amount;
 
+    var amount =  data.deal.amount;
     // check if deal is I GIVE or I PAY
     var verb = data.long_description.split(' ')[1];
-
     appendDeal(data, verb);
-    updateTotalBalance(amount, verb, 'add');  
-
-  }).fail(function(data){
-    console.log('failure new deal');
   })
 }
 
@@ -67,9 +61,7 @@ function appendDeal(data, verb) {
 }
 
 function updateTotalBalance(amount, verb, action) {
-  // If the action is to add a deal, then we add the amount to the balance
   // if action is to settle a deal, that means amount is paid and therefore we remove it from the balance
-
   if (action === 'settle') {
     amount = amount * (-1);
   }
@@ -140,10 +132,41 @@ function showHideSubZones(event) {
   $(this).addClass('active_menu');
 }
 
+function showDetails () {
+  var id = $(this).attr("data-deal-id");
+  $.ajax({
+    type: 'GET',
+    url: '/deals/'+id,
+    dataType: 'json',
+    data: {id: id}  
+  }).done(function(data){
+    var verb = data.long_description.split(' ')[1];
+    appendToEdit(data, verb);
+  })
+}
+
+function appendToEdit(data, verb) {
+  $('#edit_zone .indiv_deal_box').remove();
+  var new_item = "<ul class='indiv_deal_box'>";
+  new_item += "<li class='indiv_deal_details'> <span>"+ data.time +"- </span> <a href='#'>"+ data.long_description +"</a> </li>"
+
+  if (verb === 'Owe') {
+    new_item += "<li class='indiv_deal_pay'><button class='pay_button' data-id='"+ data.deal.id+ "'>Pay</button></li>";
+  }
+  new_item += "<li class='indiv_deal_delete'><button class='delete_button' data-id='"+ data.deal.id+ "'>Delete</button></li>";
+  new_item +=  "</ul>";
+  $('#edit_zone h4').after(new_item);
+}
+
+
+
 $(document).ready(function() {
   $('#new_friend').on('submit', createUser);
+
   $('#new_deal').on('submit', createDeal);
   $('#view_zone').on('click', '.pay_button', settleDeal);
 
   $('#quick_menu a').on('click', showHideSubZones); 
+  $('#view_zone').on('click', '.indiv_deal_box a', showDetails);
 })
+

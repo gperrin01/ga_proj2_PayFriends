@@ -39,7 +39,7 @@ header {
       line-height: normal;
       font-size: 14px;
       border-radius: 10px;
-      padding: 2px 6px;
+      padding: 2px 8px 2px 6px;
     }
     input[type="submit"] {
       font-style: italic;
@@ -54,7 +54,7 @@ header {
   }
   #new_friend {
     position: relative;
-    left: 216px;
+    left: 308px;
   }
 }
 
@@ -104,7 +104,7 @@ header {
       border-radius: 20px;
       font-size: 14px;
       font-style: italic;
-      padding: 2px 7px;
+      padding: 2px 9px 2px 7px;
       background-color: rgba(34, 108, 224, 0.67);
       border: 1px outset buttonface;
     }

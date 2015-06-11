@@ -15,6 +15,7 @@ class DealsController < ApplicationController
   end
 
   def create
+
     if params[:payer]
       payer = User.find(params[:payer].to_i)
       receiver = User.find(params[:receiver].to_i)
@@ -32,7 +33,7 @@ class DealsController < ApplicationController
     @full_deal = {deal: @deal, time: @time, long_description: @deal.long_description(current_user)}
 
     respond_to do |format|
-      format.html #{ redirect_to root_path }
+      format.html 
       format.json { render json: @full_deal, status: 200 }
     end  
   end
@@ -45,10 +46,20 @@ class DealsController < ApplicationController
     @full_deal = {deal: @deal, time: @time, long_description: @deal.long_description(current_user)}
 
     respond_to do |format|
-      format.html #{ redirect_to root_path }
+      format.html 
       format.json { render json: @full_deal, status: 200 }
     end  
+  end
 
+  def show
+    @deal = Deal.find params[:id] 
+    @time = @deal.time_create_readable
+    @full_deal = {deal: @deal, time: @time, long_description: @deal.long_description(current_user)}
+
+    respond_to do |format|
+      format.html 
+      format.json { render json: @full_deal, status: 200 }
+    end
   end
 
 
