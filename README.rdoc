@@ -1,3 +1,73 @@
-== README
+Trello board - https://trello.com/b/kMqFxU6S/proj2-pay-friends
 
-Start by assuming there is only one user: Gui. Next steps would be to offer a log in and enable any user to be logged.
+
+## Pay Friends
+
+An app to manage all your "I owe you" with your friends and process payments at the click of a button.
+
+The spirit of the app is to let you log "I owe you"s and actually pay them whenever you wish. 
+
+Because entries will be modified, and friends keep paying for things to each other, thereby offsetting part of their mutual balance, it would be inefficient to process banking payments each time a deal is logged. This would saturate your bank account with small-change movements, and would cost the app expensive transaction fees.
+
+
+## How to use it
+
+Login or create your profile on the sign up page.
+You will be directed to your dashboard.
+
+The main banner recaps the total amount you owe your friends as well as the total they owe you. This is more relevant than a net balance, since you could be "net zero" but actually have to chase multiple friends for their payment.
+
+Present on every page, a quick-add form lets you add a deal and/or friend in just a couple seconds. As a deal is inserted, it will update the recap balances, and the deal will be inserted into the relevant view, as described below.
+
+The navigation menu links to four different views:
+
+* By default, all your pending transactions, sorted by the time they were last updated. These are those who require immediate attention, since there is someone you either need to pay or to chase.
+* The list of all your friends along with a recap of the balance with each of them   *(note this hasn't been build yet)*.
+* The list of everything you owe.
+* The list of everything you are owed.
+* The log of all the past deals that were settled.
+
+Each deal in which you owe something comes with a "pay" button to settle the transaction. Clicking it will move the deal out of the view and store into the history, and will update the recap balances to reflect the fact that you do not owe this amount anymore.
+
+In all views, clicking on a deal loads it up on the right panel so that you can edit or delete it.  It will also load all the pending deals you have with the counterpart of that deal.
+
+*Note the delete button is currently not linked to any code, and the feature to list the deals with that friend hasn't been coded yet.*
+
+## The code
+
+I chose Rails for the structure it brings to the project and the ease of linking the database objects with actions on the page.
+
+Once the page is loaded, everything happens through Ajax requests so that the users immediately see the impact of what they are doing. Such an app must be as quick and user-friendly as possible.  *(note the edit button currently links to an html request as I didn't have time to write the full Ajax code for it).*
+
+I used test-driven development, which I find a great way to build only the features and codes you really want.
+I gave up using Capybara as the struggles I had with the creation of a login / current user meant rewritting everything. 
+
+## Technical challenges
+
+* Model associations: a User can be a payer or a receiver: "class_name"
+* Model associations: a Deal belongs to a payer and a receiver:  User has_many :deals_as_payer, class_name: "Deal", foreign_key: "payer_id"
+
+* Storing the id of the current user gave me a headache for about eight hours. It was solved the next day when Jeremy showed us how to create logins. I was very close to the solution, but not close enough, and lost a lot of time.
+
+* Writting html in the JS file is extremely messy
+* Ajax requests means a lot of manual updating of html items since the page does not refresh
+* I have multiple forms on the page, which do different things to the same object class. This limited the use of the rails helpers form_for as I had to manually change a lof of the html attributes and actions of the forms.
+
+I spend my life in the console and debugger, which really helped.
+
+
+## Mistakes made and room for improvement
+
+I wrote a lot of tests before actually testing them. As I thought about what the app should do, I translated this into a test case. But it turned out that I made changes to the app and to the code and that many of the test cases had to be totally rewritten, or even written off. Lesson learned: only write one test at a time, and move to the next one after it is validated.
+
+It took me a few days to realize the power of Googling. Often I did not know exactly what to Google (see the session thing), but forcing myself to think about the actual problem was a great thing.
+I ended up posting a question on Stack Overflow, and as I wrote it started thinking "oh I should let them know that there are these four lines in my model file". Sure enough I got an answer within hours which made me realize the problem laid exactly in those four lines.
+
+I do not know yet the right balance between "make it work and refactor the code later" and "make it work with a beautiful clean code".
+
+Not doing feature testing actually costed me more time since I manually did many many many clicks and adds.
+
+
+Default method at the model level prevented me from ever updating the default value. (this is the thing I understood thanks to my stack overflow question)
+
+CSS file is very repetitve. I should create more classes, and differentiate between those needed for JS purposes (events, locating DOM elements) and styling purposes.
